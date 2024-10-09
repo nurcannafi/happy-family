@@ -3,6 +3,7 @@ package hw01;
 import hw02.Family;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Human {
 
@@ -113,6 +114,20 @@ public class Human {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
         }
 
+    }
+
+    public void feedPet(boolean isHungry) {
+        if (isHungry == false) {
+            Random random = new Random();
+            int pseudorandomNumber = random.nextInt(101);
+            if (pseudorandomNumber > pet.getTrickLevel()) {
+                System.out.println("Hm... I will feed " + pet.getNickname());
+            } else {
+                System.out.println("I think Jack is not hungry.");
+            }
+        } else {
+            System.out.println("Hm... I will feed " + pet.getNickname());
+        }
     }
 
     @Override
