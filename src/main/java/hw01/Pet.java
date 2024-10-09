@@ -9,22 +9,32 @@ public class Pet {
     private String nickname;
     private Integer age;
     private Integer trickLevel;
+    private boolean isHungury;
 
     public Pet(String species, String nickname) {
         this.species = species;
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
+    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits, boolean isHungury) {
         this.species = species;
         this.nickname = nickname;
         this.age = age;
         setTrickLevel(trickLevel);
         this.habits = habits;
+        this.isHungury = isHungury;
     }
 
     public Pet() {
 
+    }
+
+    public boolean isHungury() {
+        return isHungury;
+    }
+
+    public void setHungury(boolean hungury) {
+        isHungury = hungury;
     }
 
     public String[] getHabits() {
@@ -86,10 +96,9 @@ public class Pet {
 
     @Override
     public String toString() {
-        return "Pet habits=" + Arrays.toString(habits) +
-                ", species='" + species + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", age=" + age +
-                ", trickLevel=" + trickLevel;
+        return species + "{ nickname='" + nickname + '\'' +
+                ", age=" + age + '\'' +
+                ", trickLevel=" + trickLevel + '\'' +
+                ", habits='" + Arrays.toString(habits) + "}";
     }
 }
