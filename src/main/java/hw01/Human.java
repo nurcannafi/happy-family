@@ -107,12 +107,28 @@ public class Human {
     }
 
     public void describePet() {
+        if (pet.getTrickLevel() == null) return;
         if (pet.getTrickLevel() > 50) {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is very sly.");
         } else {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
         }
 
+    }
+
+    public void feedPet() {
+        if (pet.isHungury() == false) {
+            Random random = new Random();
+            int pseudorandomNumber = random.nextInt(100);
+            if (pseudorandomNumber > pet.getTrickLevel()) {
+                System.out.println("Hm... I will feed " + pet.getNickname());
+            } else {
+                System.out.println("I think Jack is not hungry.");
+            }
+        } else {
+            System.out.println("Hm... I will feed " + pet.getNickname());
+            pet.setHungury(false);
+        }
     }
 
     @Override
