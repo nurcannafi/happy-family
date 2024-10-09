@@ -124,7 +124,7 @@ public class Human {
     public void feedPet(boolean isHungry) {
         if (isHungry == false) {
             Random random = new Random();
-            int pseudorandomNumber = random.nextInt(100);
+            int pseudorandomNumber = random.nextInt(101);
             if (pseudorandomNumber > pet.getTrickLevel()) {
                 System.out.println("Hm... I will feed " + pet.getNickname());
             } else {
