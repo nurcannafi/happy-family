@@ -1,27 +1,27 @@
 package hw01;
 
-public class Human implements HumanActions {
+import java.util.Arrays;
+
+public class Human {
     private String name;
     private String surname;
     private Integer dateOfBirthYear;
-    private Integer IQ;
+    private Integer iq;
     private Pet pet;
     private Human mother;
     private Human father;
-    private String[][] schedule; //2d array: [day of the week] x [type of the activity]
+    private String[][] schedule;
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Integer IQ, Pet pet, Human mother, Human father, String[][] schedule) {
+    public Human(String name, String surname, Integer dateOfBirthYear, Human mother, Human father) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
-        this.IQ = IQ;
-        this.pet = pet;
         this.mother = mother;
         this.father = father;
-        this.schedule = schedule;
     }
 
     public Human() {
+
     }
 
     public Human(String name, String surname, Integer dateOfBirthYear) {
@@ -30,11 +30,11 @@ public class Human implements HumanActions {
         this.dateOfBirthYear = dateOfBirthYear;
     }
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Integer IQ, Pet pet, Human mother, Human father) {
+    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Human mother, Human father) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
-        setIQ(IQ);
+        setIq(iq);
         this.pet = pet;
         this.mother = mother;
         this.father = father;
@@ -72,15 +72,15 @@ public class Human implements HumanActions {
         this.dateOfBirthYear = dateOfBirthYear;
     }
 
-    public Integer getIQ() {
-        return IQ;
+    public Integer getIq() {
+        return iq;
     }
 
-    public void setIQ(Integer IQ) {
-        if (IQ == null) {
-            this.IQ = null;
-        } else if (IQ >= 1 && IQ <= 100) {
-            this.IQ = IQ;
+    public void setIq(Integer iq) {
+        if (iq == null) {
+            this.iq = null;
+        } else if (iq >= 1 && iq <= 100) {
+            this.iq = iq;
         } else {
             throw new IllegalArgumentException("IQ must be between 1 and 100, or null.");
         }
@@ -110,12 +110,10 @@ public class Human implements HumanActions {
         this.father = father;
     }
 
-    @Override
     public void greetPet() {
         System.out.println("Hello, " + pet.getNickname());
     }
 
-    @Override
     public void describePet() {
         if (pet.getTrickLevel() > 50) {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is very sly.");
@@ -123,5 +121,17 @@ public class Human implements HumanActions {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Human name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", dateOfBirthYear=" + dateOfBirthYear +
+                ", iq=" + iq +
+                ", pet=" + pet +
+                ", mother=" + mother +
+                ", father=" + father +
+                ", schedule=" + Arrays.toString(schedule);
     }
 }
