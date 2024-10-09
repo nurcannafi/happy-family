@@ -1,6 +1,8 @@
 package hw01;
 
-public class Pet implements PetActions {
+import java.util.Arrays;
+
+public class Pet {
 
     private String[] habits;
     private String species;
@@ -11,25 +13,18 @@ public class Pet implements PetActions {
     public Pet(String species, String nickname) {
         this.species = species;
         this.nickname = nickname;
-        this.age = 0;
-        this.trickLevel = 50;
-        this.habits = new String[0];
     }
 
     public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
         this.age = age;
-        this.trickLevel = trickLevel;
+        setTrickLevel(trickLevel);
         this.habits = habits;
     }
 
     public Pet() {
-        this.species = null;
-        this.nickname = null;
-        this.age = 0;
-        this.trickLevel = 0;
-        this.habits = new String[0];
+
     }
 
     public String[] getHabits() {
@@ -69,21 +64,32 @@ public class Pet implements PetActions {
     }
 
     public void setTrickLevel(Integer trickLevel) {
-        this.trickLevel = trickLevel;
+        if (trickLevel == null) this.trickLevel = null;
+        else if (trickLevel >= 1 && trickLevel <= 100) {
+            this.trickLevel = trickLevel;
+        } else {
+            throw new IllegalArgumentException("TrickLevel must be between 1 and 100, or null.");
+        }
     }
 
-    @Override
     public void eat() {
         System.out.println("I am eating");
     }
 
-    @Override
     public void respond() {
         System.out.printf("Hello, owner. I am %s. I miss you!" + nickname);
     }
 
-    @Override
     public void foul() {
         System.out.println("I need to cover it up");
+    }
+
+    @Override
+    public String toString() {
+        return "Pet habits=" + Arrays.toString(habits) +
+                ", species='" + species + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", age=" + age +
+                ", trickLevel=" + trickLevel;
     }
 }
