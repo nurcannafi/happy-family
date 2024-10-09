@@ -9,33 +9,25 @@ public class Pet {
     private String nickname;
     private Integer age;
     private Integer trickLevel;
-    private boolean isHungury;
+
 
     public Pet(String species, String nickname) {
         this.species = species;
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits, boolean isHungury) {
+    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
         this.age = age;
         setTrickLevel(trickLevel);
         this.habits = habits;
-        this.isHungury = isHungury;
     }
 
     public Pet() {
 
     }
 
-    public boolean isHungury() {
-        return isHungury;
-    }
-
-    public void setHungury(boolean hungury) {
-        isHungury = hungury;
-    }
 
     public String[] getHabits() {
         return habits;

@@ -7,7 +7,7 @@ public class Main {
         Human motherJane = new Human("Jane", "Potter", 1975);
         Human childMichel = new Human("Michael", "Potter", 1997, fatherJon, motherJane);
         Human childHarry = new Human();
-        Pet dogRock = new Pet("dog", "Rock", 5, 60, new String[]{"eat", "drink", "sleep"}, false);
+        Pet dogRock = new Pet("dog", "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
         Pet dogGuffy = new Pet("dog", "Guffy");
         Pet catGarfield = new Pet();
         childHarry.setPet(dogGuffy);
@@ -19,7 +19,7 @@ public class Main {
         System.out.println(dogGuffy);
         System.out.println("-------------------------");
         childMichel.setPet(dogRock);
-        childMichel.feedPet();
+        childMichel.feedPet(false);
         childMichel.greetPet();
         childMichel.describePet();
         dogRock.eat();
