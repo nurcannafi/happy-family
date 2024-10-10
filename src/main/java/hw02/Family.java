@@ -62,21 +62,32 @@ public class Family {
         this.pet = pet;
     }
 
+    public boolean deleteChild(int index) {
+        for (int i = 0; i < children.length; i++) {
+            if (children[i].equals(children[index])) {
+                children[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean deleteChild(Human child) {
-        boolean isDeleted = false;
         for (int i = 0; i < children.length; i++) {
             if (children[i].equals(child)) {
                 children[i] = null;
-                isDeleted = true;
+                return true;
             }
         }
-        return isDeleted;
+        return false;
     }
 
     public Human[] addChild(Human child) {
-        Human[] newChildren = Arrays.copyOf(children, children.length + 1);
-        newChildren[children.length] = child;
-        children = newChildren;
+        if (child != null) {
+            Human[] newChildren = Arrays.copyOf(children, children.length + 1);
+            newChildren[children.length] = child;
+            children = newChildren;
+        }
         return children;
     }
 
@@ -105,10 +116,10 @@ public class Family {
     @Override
     public String toString() {
         return "Family{" +
-                "mother=" + (mother != null ? mother.toString() : "none") +
-                ", father=" + (father != null ? father.toString() : "none") +
+                "mother=" + mother.toString() +
+                ", father=" + father.toString() +
                 ", children=" + Arrays.toString(children) +
-                ", pet=" + (pet != null ? pet.toString() : "none") +
+                ", pet=" + pet.toString() +
                 '}';
     }
 }
