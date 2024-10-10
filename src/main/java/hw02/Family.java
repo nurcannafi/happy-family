@@ -63,23 +63,31 @@ public class Family {
     }
 
     public boolean deleteChild(int index) {
-        for (int i = 0; i < children.length; i++) {
-            if (children[i].equals(children[index])) {
-                children[i] = null;
-                return true;
-            }
-        }
-        return false;
+        Human[] newChildren = new Human[children.length - 1];
+        System.arraycopy(children, 0, newChildren, 0, index);
+        System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
+        children = newChildren;
+        return true;
     }
 
     public boolean deleteChild(Human child) {
+        Human[] newChildren = new Human[children.length - 1];
+        int index = -1;
         for (int i = 0; i < children.length; i++) {
             if (children[i].equals(child)) {
-                children[i] = null;
-                return true;
+                index = i;
+                break;
             }
         }
-        return false;
+
+        if (index == -1) {
+            return false;
+        }
+
+        System.arraycopy(children, 0, newChildren, 0, index);
+        System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
+        children = newChildren;
+        return true;
     }
 
     public Human[] addChild(Human child) {
