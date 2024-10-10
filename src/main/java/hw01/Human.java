@@ -1,23 +1,25 @@
 package hw01;
 
+import hw02.Family;
+
+import java.util.Arrays;
 import java.util.Random;
 
 public class Human {
+
     private String name;
     private String surname;
     private Integer dateOfBirthYear;
     private Integer iq;
     private Pet pet;
-    private Human mother;
-    private Human father;
+    private Family family;
     private String[][] schedule;
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Human mother, Human father) {
+    public Human(String name, String surname, Integer dateOfBirthYear, Family family) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
-        this.mother = mother;
-        this.father = father;
+        this.family = family;
     }
 
     public Human() {
@@ -30,14 +32,13 @@ public class Human {
         this.dateOfBirthYear = dateOfBirthYear;
     }
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Human mother, Human father) {
+    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
         setIq(iq);
         this.pet = pet;
-        this.mother = mother;
-        this.father = father;
+        this.family = family;
     }
 
     public String[][] getSchedule() {
@@ -94,20 +95,12 @@ public class Human {
         this.pet = pet;
     }
 
-    public Human getMother() {
-        return mother;
+    public Family getFamily() {
+        return family;
     }
 
-    public void setMother(Human mother) {
-        this.mother = mother;
-    }
-
-    public Human getFather() {
-        return father;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
+    public void setFamily(Family family) {
+        this.family = family;
     }
 
     public void greetPet() {
@@ -115,10 +108,12 @@ public class Human {
     }
 
     public void describePet() {
-        if (pet.getTrickLevel() == null) {
-            return;
+        if (pet.getTrickLevel() > 50) {
+            System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is very sly.");
+        } else {
+            System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
         }
-        System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is " + (pet.getTrickLevel() > 50 ? "very sly." : "almost not sly."));
+
     }
 
     public void feedPet(boolean isHungry) {
@@ -137,12 +132,14 @@ public class Human {
 
     @Override
     public String toString() {
-        return "Human{name='" + name + '\'' +
+        return "Human{" +
+                "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", dateOfBirthYear=" + dateOfBirthYear +
                 ", iq=" + iq +
-                ", mother=" + mother +
-                ", father=" + father +
-                ", pet=" + pet + "}";
+                ", pet=" + pet +
+                ", family=" + family +
+                ", schedule=" + Arrays.toString(schedule) +
+                '}';
     }
 }
