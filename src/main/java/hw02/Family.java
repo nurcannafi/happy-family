@@ -3,10 +3,11 @@ package hw02;
 import hw01.Human;
 import hw01.Pet;
 
- hw3-hikmat
-public class Family implements AutoCloseable {
 import java.util.Arrays;
 import java.util.Objects;
+
+
+public class Family implements AutoCloseable {
 
     private Human mother;
     private Human father;
@@ -59,7 +60,6 @@ import java.util.Objects;
         this.pet = pet;
     }
 
- hw3-hikmat
     @Override
     public void close() {
         System.out.println("Family object is being removed.");

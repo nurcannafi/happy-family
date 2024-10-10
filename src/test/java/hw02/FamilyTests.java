@@ -2,9 +2,12 @@ package hw02;
 
 import hw01.Human;
 
+import hw01.Pet;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,13 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class FamilyDeleteChildWithIndexTest {
+public class FamilyTests {
 
     private Family family;
     private Human mother;
     private Human father;
     private Human child1;
     private Human child2;
+    private Pet pet;
 
     @BeforeEach
     public void setUp() {
@@ -29,10 +33,11 @@ public class FamilyDeleteChildWithIndexTest {
         family = new Family(mother, father);
 
         family.setChildren(new Human[]{child1, child2});
+        family.setPet(pet);
     }
 
     @Test
-    public void deleteChildSuccessTest() {
+    public void deleteChildWithIndexSuccessTest() {
         assertTrue(family.deleteChild(0));
         Human[] oneChild = family.getChildren();
         assertEquals(1, oneChild.length);
@@ -40,12 +45,42 @@ public class FamilyDeleteChildWithIndexTest {
     }
 
     @Test
-    public void deleteChildFailureTest() {
+    public void deleteChildWithIndexFailureTest() {
         assertFalse(family.deleteChild(5));
 
         Human[] children = family.getChildren();
         assertEquals(2, children.length);
         assertEquals(child1, children[0]);
         assertEquals(child2, children[1]);
+    }
+
+    @Test
+    public void deleteChildWithObjectSuccessTest() {
+        assertTrue(family.deleteChild(child2));
+        Human[] oneChild = family.getChildren();
+        assertEquals(1, oneChild.length);
+        assertEquals(child1, oneChild[0]);
+    }
+
+    @Test
+    public void deleteChildWithObjectFailureTest() {
+        Human imaginaryChild = new Human("Imaginary", "Child", 2010);
+        assertFalse(family.deleteChild(imaginaryChild));
+
+        Human[] children = family.getChildren();
+        assertEquals(2, children.length);
+        assertEquals(child1, children[0]);
+        assertEquals(child2, children[1]);
+    }
+
+    @Test
+    public void testToString() {
+        String expected = "Family{" +
+                "mother=" + mother.toString() +
+                ", father=" + father.toString() +
+                ", children=" + Arrays.toString(new Human[]{child1}) +
+                ", pet=" + pet.toString() + '}';
+
+        assertEquals(expected, family.toString());
     }
 }
