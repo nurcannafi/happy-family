@@ -3,6 +3,7 @@ package hw01;
 import hw02.Family;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class Human implements AutoCloseable {
@@ -130,8 +131,16 @@ public class Human implements AutoCloseable {
     }
 
     @Override
-    public void close() {
-        System.out.println("Human object " + name + " " + surname + " is being removed.");
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(dateOfBirthYear, human.dateOfBirthYear) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.deepEquals(schedule, human.schedule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, dateOfBirthYear, iq, pet, family, Arrays.deepHashCode(schedule));
     }
 
     @Override
@@ -139,4 +148,8 @@ public class Human implements AutoCloseable {
         return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
     }
 
+    @Override
+    public void close() throws Exception {
+        System.out.println("System closed");
+    }
 }
