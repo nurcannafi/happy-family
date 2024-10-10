@@ -2,14 +2,13 @@ package hw01;
 
 import java.util.Arrays;
 
-public class Pet {
+public class Pet implements AutoCloseable {
 
     private String[] habits;
     private String species;
     private String nickname;
     private Integer age;
     private Integer trickLevel;
-
 
     public Pet(String species, String nickname) {
         this.species = species;
@@ -25,9 +24,7 @@ public class Pet {
     }
 
     public Pet() {
-
     }
-
 
     public String[] getHabits() {
         return habits;
@@ -79,7 +76,7 @@ public class Pet {
     }
 
     public void respond() {
-        System.out.printf("Hello, owner. I am %s. I miss you!" + nickname);
+        System.out.printf("Hello, owner. I am %s. I miss you!\n", nickname);
     }
 
     public void foul() {
@@ -87,10 +84,13 @@ public class Pet {
     }
 
     @Override
-    public String toString() {
-        return species + "{ nickname='" + nickname + '\'' +
-                ", age=" + age + '\'' +
-                ", trickLevel=" + trickLevel + '\'' +
-                ", habits='" + Arrays.toString(habits) + "}";
+    public void close() {
+        System.out.println("Pet object " + nickname + " is being removed.");
     }
+
+    @Override
+    public String toString() {
+        return String.format("{habits=%s, species='%s', nickname='%s', age=%d, trickLevel=%d}", Arrays.toString(habits), species, nickname, age, trickLevel);
+    }
+
 }
