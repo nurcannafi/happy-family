@@ -1,6 +1,7 @@
 package hw01;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Pet {
 
@@ -84,6 +85,19 @@ public class Pet {
 
     public void foul() {
         System.out.println("I need to cover it up");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pet pet = (Pet) o;
+        return Objects.deepEquals(habits, pet.habits) && Objects.equals(species, pet.species) && Objects.equals(nickname, pet.nickname) && Objects.equals(age, pet.age) && Objects.equals(trickLevel, pet.trickLevel);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.hashCode(habits), species, nickname, age, trickLevel);
     }
 
     @Override

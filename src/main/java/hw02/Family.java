@@ -65,7 +65,9 @@ public class Family {
     public boolean deleteChild(int index) {
         Human[] newChildren = new Human[children.length - 1];
         System.arraycopy(children, 0, newChildren, 0, index);
-        System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
+        if (index < children.length - 1) {
+            System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
+        }
         children = newChildren;
         return true;
     }
@@ -79,15 +81,10 @@ public class Family {
                 break;
             }
         }
-
         if (index == -1) {
             return false;
         }
-
-        System.arraycopy(children, 0, newChildren, 0, index);
-        System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
-        children = newChildren;
-        return true;
+        return deleteChild(index);
     }
 
     public Human[] addChild(Human child) {
@@ -104,21 +101,16 @@ public class Family {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(father, mother);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Family family = (Family) o;
+        return Objects.equals(mother, family.mother) && Objects.equals(father, family.father) && Objects.deepEquals(children, family.children) && Objects.equals(pet, family.pet);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Family that = (Family) obj;
-        return Objects.equals(father, that.father) &&
-                Objects.equals(mother, that.mother);
+    public int hashCode() {
+        return Objects.hash(mother, father, Arrays.hashCode(children), pet);
     }
 
     @Override
