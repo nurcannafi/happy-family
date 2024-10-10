@@ -5,7 +5,7 @@ import hw02.Family;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Human {
+public class Human implements AutoCloseable {
 
     private String name;
     private String surname;
@@ -23,7 +23,6 @@ public class Human {
     }
 
     public Human() {
-
     }
 
     public Human(String name, String surname, Integer dateOfBirthYear) {
@@ -113,17 +112,16 @@ public class Human {
         } else {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
         }
-
     }
 
     public void feedPet(boolean isHungry) {
-        if (isHungry == false) {
+        if (!isHungry) {
             Random random = new Random();
             int pseudorandomNumber = random.nextInt(101);
             if (pseudorandomNumber > pet.getTrickLevel()) {
                 System.out.println("Hm... I will feed " + pet.getNickname());
             } else {
-                System.out.println("I think Jack is not hungry.");
+                System.out.println("I think " + pet.getNickname() + " is not hungry.");
             }
         } else {
             System.out.println("Hm... I will feed " + pet.getNickname());
@@ -131,15 +129,13 @@ public class Human {
     }
 
     @Override
-    public String toString() {
-        return "Human{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", dateOfBirthYear=" + dateOfBirthYear +
-                ", iq=" + iq +
-                ", pet=" + pet +
-                ", family=" + family +
-                ", schedule=" + Arrays.toString(schedule) +
-                '}';
+    public void close() {
+        System.out.println("Human object " + name + " " + surname + " is being removed.");
     }
+
+    @Override
+    public String toString() {
+        return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
+    }
+
 }
