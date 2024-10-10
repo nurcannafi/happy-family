@@ -63,6 +63,9 @@ public class Family {
     }
 
     public boolean deleteChild(int index) {
+        if (index < 0 || index >= children.length) {
+            return false;
+        }
         Human[] newChildren = new Human[children.length - 1];
         System.arraycopy(children, 0, newChildren, 0, index);
         if (index < children.length - 1) {
