@@ -11,6 +11,7 @@ public class Pet {
     private Integer trickLevel;
     private boolean isHungury;
 
+
     public Pet(String species, String nickname) {
         this.species = species;
         this.nickname = nickname;
@@ -29,13 +30,6 @@ public class Pet {
 
     }
 
-    public boolean isHungury() {
-        return isHungury;
-    }
-
-    public void setHungury(boolean hungury) {
-        isHungury = hungury;
-    }
 
     public String[] getHabits() {
         return habits;
