@@ -1,8 +1,11 @@
 package hw02;
 
 import hw01.Human;
+
 import hw01.Pet;
+
 import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

@@ -3,6 +3,7 @@ package hw01;
 import hw02.Family;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class Human {
@@ -128,6 +129,19 @@ public class Human {
         } else {
             System.out.println("Hm... I will feed " + pet.getNickname());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(dateOfBirthYear, human.dateOfBirthYear) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.deepEquals(schedule, human.schedule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, dateOfBirthYear, iq, pet, family, Arrays.deepHashCode(schedule));
     }
 
     @Override
