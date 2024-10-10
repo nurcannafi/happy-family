@@ -5,19 +5,19 @@ import java.util.Arrays;
 public class Pet {
 
     private String[] habits;
-    private String species;
+    private Species species;
     private String nickname;
     private Integer age;
     private Integer trickLevel;
 
 
-    public Pet(String species, String nickname) {
-        this.species = species;
+    public Pet(Species species, String nickname) {
+        this.species = Species.valueOf(String.valueOf(species));
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
-        this.species = species;
+    public Pet(Species species, String nickname, Integer age, Integer trickLevel, String[] habits) {
+        this.species = Species.valueOf(String.valueOf(species));
         this.nickname = nickname;
         this.age = age;
         setTrickLevel(trickLevel);
@@ -26,6 +26,9 @@ public class Pet {
 
     public Pet() {
 
+    }
+
+    public Pet(Species dog, String rock, int age, int trickLevel, String[] habits) {
     }
 
 
@@ -37,12 +40,12 @@ public class Pet {
         this.habits = habits;
     }
 
-    public String getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
     public void setSpecies(String species) {
-        this.species = species;
+        this.species = Species.valueOf(species);
     }
 
     public String getNickname() {
