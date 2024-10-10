@@ -2,22 +2,21 @@ package hw01;
 
 import java.util.Arrays;
 
-public class Pet {
+public class Pet implements AutoCloseable {
 
     private String[] habits;
-    private Species species;
+    private String species;
     private String nickname;
     private Integer age;
     private Integer trickLevel;
 
-
-    public Pet(Species species, String nickname) {
-        this.species = Species.valueOf(String.valueOf(species));
+    public Pet(String species, String nickname) {
+        this.species = species;
         this.nickname = nickname;
     }
 
-    public Pet(Species species, String nickname, Integer age, Integer trickLevel, String[] habits) {
-        this.species = Species.valueOf(String.valueOf(species));
+    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
+        this.species = species;
         this.nickname = nickname;
         this.age = age;
         setTrickLevel(trickLevel);
@@ -25,12 +24,7 @@ public class Pet {
     }
 
     public Pet() {
-
     }
-
-    public Pet(Species dog, String rock, int age, int trickLevel, String[] habits) {
-    }
-
 
     public String[] getHabits() {
         return habits;
@@ -40,12 +34,12 @@ public class Pet {
         this.habits = habits;
     }
 
-    public Species getSpecies() {
+    public String getSpecies() {
         return species;
     }
 
     public void setSpecies(String species) {
-        this.species = Species.valueOf(species);
+        this.species = species;
     }
 
     public String getNickname() {
@@ -82,7 +76,7 @@ public class Pet {
     }
 
     public void respond() {
-        System.out.printf("Hello, owner. I am %s. I miss you!" + nickname);
+        System.out.printf("Hello, owner. I am %s. I miss you!\n", nickname);
     }
 
     public void foul() {
@@ -90,10 +84,13 @@ public class Pet {
     }
 
     @Override
-    public String toString() {
-        return species + "{ nickname='" + nickname + '\'' +
-                ", age=" + age + '\'' +
-                ", trickLevel=" + trickLevel + '\'' +
-                ", habits='" + Arrays.toString(habits) + "}";
+    public void close() {
+        System.out.println("Pet object " + nickname + " is being removed.");
     }
+
+    @Override
+    public String toString() {
+        return String.format("{habits=%s, species='%s', nickname='%s', age=%d, trickLevel=%d}", Arrays.toString(habits), species, nickname, age, trickLevel);
+    }
+
 }
