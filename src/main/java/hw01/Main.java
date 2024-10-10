@@ -39,6 +39,8 @@ public class Main {
                     System.out.println(childMichel);
                     System.out.println(dogRock);
                     System.out.println("-------------------------");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             }
 

@@ -3,7 +3,7 @@ package hw01;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Pet {
+public class Pet implements AutoCloseable {
 
     private String[] habits;
     private String species;
@@ -106,5 +106,10 @@ public class Pet {
                 ", age=" + age + '\'' +
                 ", trickLevel=" + trickLevel + '\'' +
                 ", habits='" + Arrays.toString(habits) + "}";
+    }
+
+    @Override
+    public void close() throws Exception {
+        System.out.println("System closed");
     }
 }
