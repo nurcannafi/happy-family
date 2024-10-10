@@ -3,6 +3,9 @@ package hw02;
 import hw01.Human;
 import hw01.Pet;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Family {
 
     private Human mother;
@@ -57,5 +60,74 @@ public class Family {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public boolean deleteChild(int index) {
+        Human[] newChildren = new Human[children.length - 1];
+        System.arraycopy(children, 0, newChildren, 0, index);
+        System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
+        children = newChildren;
+        return true;
+    }
+
+    public boolean deleteChild(Human child) {
+        Human[] newChildren = new Human[children.length - 1];
+        int index = -1;
+        for (int i = 0; i < children.length; i++) {
+            if (children[i].equals(child)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            return false;
+        }
+
+        System.arraycopy(children, 0, newChildren, 0, index);
+        System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
+        children = newChildren;
+        return true;
+    }
+
+    public Human[] addChild(Human child) {
+        if (child != null) {
+            Human[] newChildren = Arrays.copyOf(children, children.length + 1);
+            newChildren[children.length] = child;
+            children = newChildren;
+        }
+        return children;
+    }
+
+    public int countFamily() {
+        return children.length + 2;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(father, mother);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Family that = (Family) obj;
+        return Objects.equals(father, that.father) &&
+                Objects.equals(mother, that.mother);
+    }
+
+    @Override
+    public String toString() {
+        return "Family{" +
+                "mother=" + mother.toString() +
+                ", father=" + father.toString() +
+                ", children=" + Arrays.toString(children) +
+                ", pet=" + pet.toString() +
+                '}';
     }
 }
