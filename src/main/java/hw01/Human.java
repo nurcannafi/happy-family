@@ -112,6 +112,7 @@ public class Human implements AutoCloseable {
         } else {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
         }
+
     }
 
     public void feedPet(boolean isHungry) {
