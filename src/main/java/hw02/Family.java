@@ -6,7 +6,8 @@ import hw01.Pet;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Family {
+
+public class Family implements AutoCloseable {
 
     private Human mother;
     private Human father;
@@ -17,18 +18,15 @@ public class Family {
         System.out.println(Family.class.getSimpleName() + " class loaded.");
     }
 
-
     {
         System.out.println(this.getClass().getSimpleName() + " object created.");
     }
-
 
     public Family(Human mother, Human father) {
         this.mother = mother;
         this.father = father;
         this.children = new Human[0];
     }
-
 
     public Human getMother() {
         return mother;
@@ -60,6 +58,11 @@ public class Family {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Family object is being removed.");
     }
 
     public boolean deleteChild(int index) {
