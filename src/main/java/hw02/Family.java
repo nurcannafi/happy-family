@@ -3,11 +3,11 @@ package hw02;
 import hw01.Human;
 import hw01.Pet;
 
+public class Family {
 import java.util.Arrays;
 import java.util.Objects;
 
-
-public class Family implements AutoCloseable {
+public class Family {
 
     private Human mother;
     private Human father;
@@ -58,11 +58,6 @@ public class Family implements AutoCloseable {
 
     public void setPet(Pet pet) {
         this.pet = pet;
-    }
-
-    @Override
-    public void close() {
-        System.out.println("Family object is being removed.");
     }
 
     public boolean deleteChild(int index) {
@@ -128,4 +123,5 @@ public class Family implements AutoCloseable {
                 ", pet=" + pet.toString() +
                 '}';
     }
+
 }

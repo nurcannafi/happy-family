@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class Human implements AutoCloseable {
+public class Human {
 
     private String name;
     private String surname;
@@ -114,7 +114,6 @@ public class Human implements AutoCloseable {
         } else {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
         }
-
     }
 
     public void feedPet(boolean isHungry) {
@@ -132,7 +131,10 @@ public class Human implements AutoCloseable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public String toString() {
+        return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
+    }
+      public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
@@ -144,13 +146,19 @@ public class Human implements AutoCloseable {
         return Objects.hash(name, surname, dateOfBirthYear, iq, pet, family, Arrays.deepHashCode(schedule));
     }
 
+    @SuppressWarnings({"deprecation", "removal"})
+
     @Override
-    public String toString() {
-        return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
+    protected void finalize() throws Throwable {
+        System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
+        super.finalize();
     }
 
     @Override
     public void close() throws Exception {
         System.out.println("System closed");
     }
+  
 }
+
+

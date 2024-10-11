@@ -3,7 +3,7 @@ package hw01;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Pet implements AutoCloseable {
+public class Pet {
 
     private String[] habits;
     private Species species;
@@ -26,7 +26,6 @@ public class Pet implements AutoCloseable {
     }
 
     public Pet() {
-
     }
 
 
@@ -88,6 +87,10 @@ public class Pet implements AutoCloseable {
     }
 
     @Override
+    public String toString() {
+        return String.format("{habits=%s, species='%s', nickname='%s', age=%d, trickLevel=%d}", Arrays.toString(habits), species, nickname, age, trickLevel);
+    }
+  
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -100,7 +103,14 @@ public class Pet implements AutoCloseable {
         return Objects.hash(Arrays.hashCode(habits), species, nickname, age, trickLevel);
     }
 
+    @SuppressWarnings({"deprecation", "removal"})
+
     @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Pet object is being removed: " + this.getNickname());
+        super.finalize();
+    }
+  
     public String toString() {
         return species + "{ nickname='" + nickname + '\'' +
                 ", age=" + age + '\'' +
@@ -112,4 +122,5 @@ public class Pet implements AutoCloseable {
     public void close() throws Exception {
         System.out.println("System closed");
     }
+  
 }
