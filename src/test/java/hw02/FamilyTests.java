@@ -4,6 +4,8 @@ import hw01.Human;
 
 import hw01.Pet;
 
+import hw01.Species;
+
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,7 @@ public class FamilyTests {
         father = new Human("Jon", "Doe", 1972);
         child1 = new Human("Jack", "Doe", 2000);
         child2 = new Human("Jill", "Doe", 2005);
+        pet = new Pet(Species.DOG, "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
         family = new Family(mother, father);
 
         family.setChildren(new Human[]{child1, child2});
@@ -79,7 +82,7 @@ public class FamilyTests {
         String expected = "Family{" +
                 "mother=" + mother.toString() +
                 ", father=" + father.toString() +
-                ", children=" + Arrays.toString(new Human[]{child1}) +
+                ", children=" + Arrays.toString(new Human[]{child1, child2}) +
                 ", pet=" + pet.toString() + '}';
 
         assertEquals(expected, family.toString());

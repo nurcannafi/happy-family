@@ -6,18 +6,18 @@ import java.util.Objects;
 public class Pet implements AutoCloseable {
 
     private String[] habits;
-    private String species;
+    private Species species;
     private String nickname;
     private Integer age;
     private Integer trickLevel;
 
 
-    public Pet(String species, String nickname) {
+    public Pet(Species species, String nickname) {
         this.species = species;
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
+    public Pet(Species species, String nickname, Integer age, Integer trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
         this.age = age;
@@ -38,11 +38,11 @@ public class Pet implements AutoCloseable {
         this.habits = habits;
     }
 
-    public String getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
-    public void setSpecies(String species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 

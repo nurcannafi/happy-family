@@ -32,13 +32,14 @@ public class Human implements AutoCloseable {
         this.dateOfBirthYear = dateOfBirthYear;
     }
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family) {
+    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, String[][] schedule) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
         setIq(iq);
         this.pet = pet;
         this.family = family;
+        this.schedule = schedule;
     }
 
     public String[][] getSchedule() {

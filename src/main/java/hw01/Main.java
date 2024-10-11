@@ -16,8 +16,8 @@ public class Main {
                      Human motherJane = new Human("Jane", "Potter", 1975);
                      Family family = new Family(motherJane, fatherJon);
                      Human childMichel = new Human("Michael", "Potter", 1997, family);
-                     Pet dogRock = new Pet("dog", "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
-                     Pet dogGuffy = new Pet("dog", "Guffy");
+                     Pet dogRock = new Pet(Species.DOG, "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
+                     Pet dogGuffy = new Pet(Species.DOG, "Guffy");
                      Human childHarry = new Human()) {
 
                     childHarry.setPet(dogGuffy);
@@ -39,7 +39,8 @@ public class Main {
                     System.out.println(childMichel);
                     System.out.println(dogRock);
                     System.out.println("-------------------------");
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
