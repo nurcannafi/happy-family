@@ -1,19 +1,13 @@
 package hw02;
 
 import hw01.Human;
-
 import hw01.Pet;
 import org.junit.jupiter.api.BeforeEach;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FamilyTests {
 
@@ -22,6 +16,7 @@ public class FamilyTests {
     private Human father;
     private Human child1;
     private Human child2;
+    private Human child3;
     private Pet pet;
 
     @BeforeEach
@@ -30,7 +25,15 @@ public class FamilyTests {
         father = new Human("Jon", "Doe", 1972);
         child1 = new Human("Jack", "Doe", 2000);
         child2 = new Human("Jill", "Doe", 2005);
+        child3 = new Human("Leonel Andreas", "Messi", 2003);
         family = new Family(mother, father);
+        pet = new Pet(
+                "Dog",
+                "Buddy",
+                3,
+                75,
+                new String[]{"playing fetch", "barking", "chewing toys"}
+        );
 
         family.setChildren(new Human[]{child1, child2});
         family.setPet(pet);
@@ -74,11 +77,31 @@ public class FamilyTests {
     }
 
     @Test
+    public void addChildTest() {
+        family.addChild(child3);
+        assertEquals(3, family.getChildren().length);
+        assertEquals(child3, family.getChildren()[2]);
+        family.addChild(null);
+        assertEquals(3, family.getChildren().length);
+
+    }
+
+    @Test
+    public void countFamilyTest() {
+
+        assertEquals(4, family.getChildren().length + 2);
+        family.addChild(child3);
+        assertEquals(5, family.getChildren().length + 2);
+        family.addChild(null);
+        assertEquals(5, family.getChildren().length + 2);
+    }
+
+    @Test
     public void testToString() {
         String expected = "Family{" +
                 "mother=" + mother.toString() +
                 ", father=" + father.toString() +
-                ", children=" + Arrays.toString(new Human[]{child1}) +
+                ", children=" + Arrays.toString(family.getChildren()) +
                 ", pet=" + pet.toString() + '}';
 
         assertEquals(expected, family.toString());
