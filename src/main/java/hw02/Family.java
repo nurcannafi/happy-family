@@ -3,7 +3,7 @@ package hw02;
 import hw01.Human;
 import hw01.Pet;
 
-public class Family implements AutoCloseable {
+public class Family {
 
     private Human mother;
     private Human father;
@@ -56,9 +56,12 @@ public class Family implements AutoCloseable {
         this.pet = pet;
     }
 
+    @SuppressWarnings({"deprecation", "removal"})
+
     @Override
-    public void close() {
-        System.out.println("Family object is being removed.");
+    protected void finalize() throws Throwable {
+        System.out.println("Family object is being removed: " + this);
+        super.finalize();
     }
 
 }

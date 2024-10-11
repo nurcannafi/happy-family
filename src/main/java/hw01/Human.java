@@ -5,7 +5,7 @@ import hw02.Family;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Human implements AutoCloseable {
+public class Human {
 
     private String name;
     private String surname;
@@ -129,13 +129,18 @@ public class Human implements AutoCloseable {
     }
 
     @Override
-    public void close() {
-        System.out.println("Human object " + name + " " + surname + " is being removed.");
-    }
-
-    @Override
     public String toString() {
         return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
     }
 
+    @SuppressWarnings({"deprecation", "removal"})
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
+        super.finalize();
+    }
+
 }
+
+

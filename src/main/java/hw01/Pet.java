@@ -2,7 +2,7 @@ package hw01;
 
 import java.util.Arrays;
 
-public class Pet implements AutoCloseable {
+public class Pet {
 
     private String[] habits;
     private String species;
@@ -84,13 +84,16 @@ public class Pet implements AutoCloseable {
     }
 
     @Override
-    public void close() {
-        System.out.println("Pet object " + nickname + " is being removed.");
-    }
-
-    @Override
     public String toString() {
         return String.format("{habits=%s, species='%s', nickname='%s', age=%d, trickLevel=%d}", Arrays.toString(habits), species, nickname, age, trickLevel);
+    }
+
+    @SuppressWarnings({"deprecation", "removal"})
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Pet object is being removed: " + this.getNickname());
+        super.finalize();
     }
 
 }
