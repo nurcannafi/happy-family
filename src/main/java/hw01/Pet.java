@@ -1,21 +1,23 @@
 package hw01;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Pet {
 
     private String[] habits;
-    private String species;
+    private Species species;
     private String nickname;
     private Integer age;
     private Integer trickLevel;
 
-    public Pet(String species, String nickname) {
+
+    public Pet(Species species, String nickname) {
         this.species = species;
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
+    public Pet(Species species, String nickname, Integer age, Integer trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
         this.age = age;
@@ -26,6 +28,7 @@ public class Pet {
     public Pet() {
     }
 
+
     public String[] getHabits() {
         return habits;
     }
@@ -34,11 +37,11 @@ public class Pet {
         this.habits = habits;
     }
 
-    public String getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
-    public void setSpecies(String species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 
@@ -76,7 +79,7 @@ public class Pet {
     }
 
     public void respond() {
-        System.out.printf("Hello, owner. I am %s. I miss you!\n", nickname);
+        System.out.printf("Hello, owner. I am %s. I miss you!" + nickname);
     }
 
     public void foul() {
@@ -87,6 +90,18 @@ public class Pet {
     public String toString() {
         return String.format("{habits=%s, species='%s', nickname='%s', age=%d, trickLevel=%d}", Arrays.toString(habits), species, nickname, age, trickLevel);
     }
+  
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pet pet = (Pet) o;
+        return Objects.deepEquals(habits, pet.habits) && Objects.equals(species, pet.species) && Objects.equals(nickname, pet.nickname) && Objects.equals(age, pet.age) && Objects.equals(trickLevel, pet.trickLevel);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.hashCode(habits), species, nickname, age, trickLevel);
+    }
 
     @SuppressWarnings({"deprecation", "removal"})
 
@@ -95,5 +110,17 @@ public class Pet {
         System.out.println("Pet object is being removed: " + this.getNickname());
         super.finalize();
     }
+  
+    public String toString() {
+        return species + "{ nickname='" + nickname + '\'' +
+                ", age=" + age + '\'' +
+                ", trickLevel=" + trickLevel + '\'' +
+                ", habits='" + Arrays.toString(habits) + "}";
+    }
 
+    @Override
+    public void close() throws Exception {
+        System.out.println("System closed");
+    }
+  
 }
