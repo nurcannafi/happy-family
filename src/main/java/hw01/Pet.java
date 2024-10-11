@@ -117,10 +117,5 @@ public class Pet {
                 ", trickLevel=" + trickLevel + '\'' +
                 ", habits='" + Arrays.toString(habits) + "}";
     }
-
-    @Override
-    public void close() throws Exception {
-        System.out.println("System closed");
-    }
-  
+    
 }
