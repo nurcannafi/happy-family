@@ -105,12 +105,9 @@ public class Pet {
         System.out.println("Pet object is being removed: " + this.getNickname());
         super.finalize();
     }
-  
+
+    @Override
     public String toString() {
-        return species + "{ nickname='" + nickname + '\'' +
-                ", age=" + age + '\'' +
-                ", trickLevel=" + trickLevel + '\'' +
-                ", habits='" + Arrays.toString(habits) + "}";
+        return String.format("{habits=%s, species=%s, nickname='%s', age=%d, trickLevel=%d}", Arrays.toString(habits), species, nickname, age, trickLevel);
     }
-    
 }

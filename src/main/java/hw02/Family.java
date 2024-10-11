@@ -127,7 +127,7 @@ public class Family {
                 "mother=" + mother.toString() +
                 ", father=" + father.toString() +
                 ", children=" + Arrays.toString(children) +
-                ", pet=" + pet.toString() +
+                ", pet=" + (pet != null ? pet.toString() : "null") +
                 '}';
     }
 
