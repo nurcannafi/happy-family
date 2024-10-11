@@ -134,7 +134,8 @@ public class Human {
     public String toString() {
         return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
     }
-      public boolean equals(Object o) {
+
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
@@ -153,7 +154,7 @@ public class Human {
         System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
         super.finalize();
     }
-    
+
 }
 
 
