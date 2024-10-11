@@ -86,6 +86,12 @@ public class FamilyTests {
         assertEquals(5, family.getChildren().length + 2);
         family.addChild(null);
         assertEquals(5, family.getChildren().length + 2);
+        family.deleteChild(1);
+        assertEquals(4, family.getChildren().length + 2);
+        family.deleteChild(child3);
+        assertEquals(3,family.getChildren().length+2);
+        family.deleteChild(null);
+        assertEquals(3,family.getChildren().length+2);
     }
 
     @Test
