@@ -2,13 +2,11 @@ package hw02;
 
 import hw01.Human;
 import hw01.Pet;
-
-public class Family {
 import java.util.Arrays;
 import java.util.Objects;
 
 public class Family {
-
+    
     private Human mother;
     private Human father;
     private Human[] children;
