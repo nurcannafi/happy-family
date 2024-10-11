@@ -1,5 +1,6 @@
 package hw02;
 
+
 import hw01.Human;
 import hw01.Pet;
 
