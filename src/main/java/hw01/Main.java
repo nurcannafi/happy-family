@@ -16,8 +16,8 @@ public class Main {
                 Human motherJane = new Human("Jane", "Potter", 1975);
                 Family family = new Family(motherJane, fatherJon);
                 Human childMichael = new Human("Michael", "Potter", 1997, family);
-                Pet dogRock = new Pet("dog", "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
-                Pet dogGuffy = new Pet("dog", "Guffy");
+                Pet dogRock = new Pet(Species.DOG, "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
+                Pet dogGuffy = new Pet(Species.DOG, "Guffy");
                 Human childHarry = new Human();
 
                 childHarry.setPet(dogGuffy);
@@ -48,39 +48,6 @@ public class Main {
                 dogRock = null;
                 dogGuffy = null;
                 childHarry = null;
-              
-                try (Human fatherJon = new Human("Jon", "Potter", 1970);
-                     Human motherJane = new Human("Jane", "Potter", 1975);
-                     Family family = new Family(motherJane, fatherJon);
-                     Human childMichel = new Human("Michael", "Potter", 1997, family);
-                     Pet dogRock = new Pet(Species.DOG, "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
-                     Pet dogGuffy = new Pet(Species.DOG, "Guffy");
-                     Human childHarry = new Human()) {
-
-                    childHarry.setPet(dogGuffy);
-                    childHarry.greetPet();
-                    dogGuffy.eat();
-                    dogGuffy.foul();
-
-                    System.out.println(childHarry);
-                    System.out.println(dogGuffy);
-                    System.out.println("-------------------------");
-
-                    childMichel.setPet(dogRock);
-                    childMichel.greetPet();
-                    childMichel.describePet();
-
-                    dogRock.eat();
-                    dogRock.foul();
-
-                    System.out.println(childMichel);
-                    System.out.println(dogRock);
-                    System.out.println("-------------------------");
-                }
-                catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-
             }
 
             System.gc();
@@ -91,5 +58,4 @@ public class Main {
             }
         }
     }
-
 }
