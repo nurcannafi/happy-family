@@ -1,9 +1,13 @@
 package hw02;
 
 import hw01.Human;
+
 import hw01.Pet;
+
 import hw01.Species;
+
 import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -89,9 +93,9 @@ public class FamilyTests {
         family.deleteChild(1);
         assertEquals(4, family.getChildren().length + 2);
         family.deleteChild(child3);
-        assertEquals(3,family.getChildren().length+2);
+        assertEquals(3, family.getChildren().length + 2);
         family.deleteChild(null);
-        assertEquals(3,family.getChildren().length+2);
+        assertEquals(3, family.getChildren().length + 2);
     }
 
     @Test
