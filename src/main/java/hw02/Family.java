@@ -56,12 +56,4 @@ public class Family {
         this.pet = pet;
     }
 
-    @SuppressWarnings({"deprecation", "removal"})
-
-    @Override
-    protected void finalize() throws Throwable {
-        System.out.println("Family object is being removed: " + this);
-        super.finalize();
-    }
-
 }

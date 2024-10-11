@@ -3,6 +3,7 @@ package hw01;
 import hw02.Family;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class Human {
@@ -31,13 +32,14 @@ public class Human {
         this.dateOfBirthYear = dateOfBirthYear;
     }
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family) {
+    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, String[][] schedule) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
         setIq(iq);
         this.pet = pet;
         this.family = family;
+        this.schedule = schedule;
     }
 
     public String[][] getSchedule() {
@@ -132,6 +134,17 @@ public class Human {
     public String toString() {
         return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
     }
+      public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(dateOfBirthYear, human.dateOfBirthYear) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.deepEquals(schedule, human.schedule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, dateOfBirthYear, iq, pet, family, Arrays.deepHashCode(schedule));
+    }
 
     @SuppressWarnings({"deprecation", "removal"})
 
@@ -141,6 +154,11 @@ public class Human {
         super.finalize();
     }
 
+    @Override
+    public void close() throws Exception {
+        System.out.println("System closed");
+    }
+  
 }
 
 
