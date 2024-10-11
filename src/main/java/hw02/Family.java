@@ -1,11 +1,12 @@
 package hw02;
 
-
 import hw01.Human;
 import hw01.Pet;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Family {
-
+  
     private Human mother;
     private Human father;
     private Human[] children;
@@ -56,5 +57,12 @@ public class Family {
     public void setPet(Pet pet) {
         this.pet = pet;
     }
+
+    @SuppressWarnings({"deprecation", "removal"})
+    
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Family object is being removed: " + this);
+        super.finalize();
 
 }

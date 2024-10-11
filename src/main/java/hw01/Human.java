@@ -153,12 +153,7 @@ public class Human {
         System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
         super.finalize();
     }
-
-    @Override
-    public void close() throws Exception {
-        System.out.println("System closed");
-    }
-  
+    
 }
 
 
