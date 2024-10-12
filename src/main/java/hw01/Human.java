@@ -128,12 +128,17 @@ public class Human {
     }
 
     public void describePet() {
-        if (pet.getTrickLevel() > 50) {
-            System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is very sly.");
+        if (pet != null) {
+            if (pet.getTrickLevel() > 50) {
+                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is very sly.");
+            } else {
+                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is almost not sly.");
+            }
         } else {
-            System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is almost not sly.");
+            System.out.println("I don't have a pet.");
         }
     }
+
 
     public void feedPet(boolean isHungry) {
         if (!isHungry) {

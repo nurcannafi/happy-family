@@ -23,14 +23,13 @@ public class Main {
                 fatherJon.addToSchedule(DayOfWeek.WEDNESDAY, "Meeting");
 
 
-                Pet dogRock = new Pet(Species.DOG, "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
-                Pet dogGuffy = new Pet(Species.DOG, "Guffy");
+                Pet dogRock = new Dog("Rock");
+                Pet dogGuffy = new Dog("Guffy");
 
 
                 fatherJon.setPet(dogGuffy);
                 fatherJon.greetPet();
                 dogGuffy.eat();
-                dogGuffy.foul();
 
                 System.out.println(fatherJon);
                 System.out.println(dogGuffy);
@@ -41,7 +40,6 @@ public class Main {
                 childMichael.describePet();
 
                 dogRock.eat();
-                dogRock.foul();
 
                 System.out.println(childMichael);
                 System.out.println(dogRock);
