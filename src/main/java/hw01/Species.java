@@ -4,5 +4,6 @@ public enum Species {
     CAT,
     DOG,
     FISH,
-    BIRD
+    ROBOCAT,
+    UNKNOWN
 }
