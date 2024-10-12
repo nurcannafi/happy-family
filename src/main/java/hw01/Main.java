@@ -16,16 +16,23 @@ public class Main {
                 Human motherJane = new Human("Jane", "Potter", 1975);
                 Family family = new Family(motherJane, fatherJon);
                 Human childMichael = new Human("Michael", "Potter", 1997, family);
+
+
+                fatherJon.addToSchedule(DayOfWeek.MONDAY, "Work");
+                fatherJon.addToSchedule(DayOfWeek.TUESDAY, "Gym");
+                fatherJon.addToSchedule(DayOfWeek.WEDNESDAY, "Meeting");
+
+
                 Pet dogRock = new Pet(Species.DOG, "Rock", 5, 60, new String[]{"eat", "drink", "sleep"});
                 Pet dogGuffy = new Pet(Species.DOG, "Guffy");
-                Human childHarry = new Human();
 
-                childHarry.setPet(dogGuffy);
-                childHarry.greetPet();
+
+                fatherJon.setPet(dogGuffy);
+                fatherJon.greetPet();
                 dogGuffy.eat();
                 dogGuffy.foul();
 
-                System.out.println(childHarry);
+                System.out.println(fatherJon);
                 System.out.println(dogGuffy);
                 System.out.println("-------------------------");
 
@@ -47,8 +54,8 @@ public class Main {
                 childMichael = null;
                 dogRock = null;
                 dogGuffy = null;
-                childHarry = null;
             }
+
 
             System.gc();
             try {

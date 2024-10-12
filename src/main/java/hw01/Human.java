@@ -21,6 +21,11 @@ public class Human {
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
         this.family = family;
+        this.schedule = new String[7][2];
+        for (int i = 0; i < schedule.length; i++) {
+            schedule[i][0] = DayOfWeek.values()[i].name();
+            schedule[i][1] = "Empty";
+        }
     }
 
     public Human() {
@@ -30,6 +35,11 @@ public class Human {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
+        this.schedule = new String[7][2];
+        for (int i = 0; i < schedule.length; i++) {
+            schedule[i][0] = DayOfWeek.values()[i].name();
+            schedule[i][1] = "Empty";
+        }
     }
 
     public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, String[][] schedule) {
@@ -39,7 +49,7 @@ public class Human {
         setIq(iq);
         this.pet = pet;
         this.family = family;
-        this.schedule = schedule;
+        this.schedule = (schedule != null) ? schedule : new String[7][2];
     }
 
     public String[][] getSchedule() {
@@ -47,7 +57,7 @@ public class Human {
     }
 
     public void setSchedule(String[][] schedule) {
-        this.schedule = schedule;
+        this.schedule = (schedule != null) ? schedule : new String[7][2];
     }
 
     public String getName() {
@@ -108,6 +118,15 @@ public class Human {
         System.out.println("Hello, " + pet.getNickname());
     }
 
+    public void addToSchedule(DayOfWeek day, String activity) {
+        int dayIndex = day.ordinal();
+        if (!"Empty".equals(schedule[dayIndex][1])) {
+            System.out.println("This day already has an activity: " + schedule[dayIndex][1]);
+            return;
+        }
+        schedule[dayIndex][1] = activity;
+    }
+
     public void describePet() {
         if (pet.getTrickLevel() > 50) {
             System.out.println("I have an " + pet.getSpecies() + " is " + pet.getAge() + " years old, he is very sly.");
@@ -132,7 +151,15 @@ public class Human {
 
     @Override
     public String toString() {
-        return String.format("{name='%s', surname='%s', dateOfBirthYear=%d, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, dateOfBirthYear, iq, pet, family, Arrays.toString(schedule));
+        return "Human{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", dateOfBirthYear=" + dateOfBirthYear +
+                ", iq=" + iq +
+                ", pet=" + pet +
+                ", family=" + family +
+                ", schedule=" + (schedule != null ? Arrays.deepToString(schedule) : "null") +
+                '}';
     }
 
     public boolean equals(Object o) {
@@ -154,7 +181,4 @@ public class Human {
         System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
         super.finalize();
     }
-
 }
-
-
