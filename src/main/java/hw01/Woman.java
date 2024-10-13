@@ -2,6 +2,8 @@ package hw01;
 
 import hw02.Family;
 
+import java.util.Map;
+
 public class Woman extends Human {
 
     public Woman() {
@@ -15,7 +17,7 @@ public class Woman extends Human {
         super(name, surname, dateOfBirthYear, family);
     }
 
-    public Woman(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, String[][] schedule) {
+    public Woman(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek,String> schedule) {
         super(name, surname, dateOfBirthYear, iq, pet, family, schedule);
     }
 
