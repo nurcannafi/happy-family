@@ -1,4 +1,4 @@
-package hw01;
+package happy_family;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -12,13 +12,13 @@ public abstract class Pet {
     private Species species;
     private Set<String> habits;
 
-    public Pet(String nickname) {
+    protected Pet(String nickname) {
         this.nickname = nickname;
         this.species = Species.UNKNOWN;
         habits = new HashSet<>();
     }
 
-    public Pet(String nickname, Integer age, Integer trickLevel, Set<String> habits) {
+    protected Pet(String nickname, Integer age, Integer trickLevel, Set<String> habits) {
         this.nickname = nickname;
         this.age = age;
         setTrickLevel(trickLevel);
@@ -85,7 +85,8 @@ public abstract class Pet {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pet pet = (Pet) o;
-        return Objects.equals(habits, pet.habits) && Objects.equals(nickname, pet.nickname) && Objects.equals(age, pet.age) && Objects.equals(trickLevel, pet.trickLevel) && species == pet.species;
+        return Objects.equals(habits, pet.habits) && Objects.equals(nickname, pet.nickname)
+                && Objects.equals(age, pet.age) && Objects.equals(trickLevel, pet.trickLevel) && species == pet.species;
     }
 
     @Override
@@ -96,7 +97,7 @@ public abstract class Pet {
     @Override
     public String toString() {
         return String.format("%s{nickname='%s', age=%s, trickLevel=%s, habits=%s}",
-                species, nickname, age != null ? age : "null", trickLevel != null ? trickLevel : "null", habits);
+                species, nickname, age, trickLevel, habits);
     }
 
 }

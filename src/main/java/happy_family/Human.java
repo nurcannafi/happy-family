@@ -1,6 +1,4 @@
-package hw01;
-
-import hw02.Family;
+package happy_family;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +21,6 @@ public class Human {
         this.dateOfBirthYear = dateOfBirthYear;
         this.family = family;
         this.schedule = new HashMap<>();
-        for (DayOfWeek day : DayOfWeek.values()) {
-            schedule.put(day, "Empty");
-        }
     }
 
     public Human() {
@@ -36,9 +31,6 @@ public class Human {
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
         this.schedule = new HashMap<>();
-        for (DayOfWeek day : DayOfWeek.values()) {
-            schedule.put(day, "Empty");
-        }
     }
 
     public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
@@ -51,17 +43,12 @@ public class Human {
         this.schedule = (schedule != null) ? schedule : new HashMap<>();
     }
 
-    public Map<DayOfWeek, String> getSchedule() {
-        return schedule;
-    }
-
     public void greetPet() {
         System.out.println("Hello, " + pet.getNickname());
     }
 
     public void addToSchedule(DayOfWeek day, String activity) {
-        int dayIndex = day.ordinal();
-        if (!"Empty".equals(schedule.get(day))) {
+        if (schedule.containsKey(day)) {
             System.out.println("This day already has an activity: " + schedule.get(day));
             return;
         }
@@ -92,6 +79,10 @@ public class Human {
         } else {
             System.out.println("Hm... I will feed " + pet.getNickname());
         }
+    }
+
+    public Map<DayOfWeek, String> getSchedule() {
+        return schedule;
     }
 
     public void setSchedule(Map<DayOfWeek, String> schedule) {
@@ -170,7 +161,6 @@ public class Human {
     @Override
     protected void finalize() throws Throwable {
         System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
-        super.finalize();
     }
 
     @Override

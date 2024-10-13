@@ -1,6 +1,4 @@
-package hw01;
-
-import hw02.Family;
+package happy_family;
 
 import java.util.Map;
 
