@@ -3,15 +3,18 @@ package hw02;
 import hw01.Human;
 import hw01.Pet;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class Family {
 
     private Human mother;
     private Human father;
-    private Human[] children;
-    private Pet pet;
+    private List<Human> children;
+    private Set<Pet> pet;
 
     static {
         System.out.println(Family.class.getSimpleName() + " class loaded.");
@@ -24,7 +27,8 @@ public class Family {
     public Family(Human mother, Human father) {
         this.mother = mother;
         this.father = father;
-        this.children = new Human[0];
+        this.children = new ArrayList<>();
+        this.pet = new HashSet<>();
     }
 
     public Human getMother() {
@@ -43,61 +47,43 @@ public class Family {
         this.father = father;
     }
 
-    public Human[] getChildren() {
+    public List<Human> getChildren() {
         return children;
     }
 
-    public void setChildren(Human[] children) {
+    public void setChildren(List<Human> children) {
         this.children = children;
     }
 
-    public Pet getPet() {
+    public Set<Pet> getPet() {
         return pet;
     }
 
-    public void setPet(Pet pet) {
+    public void setPet(Set<Pet> pet) {
         this.pet = pet;
     }
 
     public boolean deleteChild(int index) {
-        if (index < 0 || index >= children.length) {
+        if (index < 0 || index >= children.size()) {
             return false;
         }
-        Human[] newChildren = new Human[children.length - 1];
-        System.arraycopy(children, 0, newChildren, 0, index);
-        if (index < children.length - 1) {
-            System.arraycopy(children, index + 1, newChildren, index, children.length - index - 1);
-        }
-        children = newChildren;
+        children.remove(index);
         return true;
     }
 
     public boolean deleteChild(Human child) {
-        Human[] newChildren = new Human[children.length - 1];
-        int index = -1;
-        for (int i = 0; i < children.length; i++) {
-            if (children[i].equals(child)) {
-                index = i;
-                break;
-            }
-        }
-        if (index == -1) {
-            return false;
-        }
-        return deleteChild(index);
+            return children.remove(child);
     }
 
-    public Human[] addChild(Human child) {
+    public List<Human> addChild(Human child) {
         if (child != null) {
-            Human[] newChildren = Arrays.copyOf(children, children.length + 1);
-            newChildren[children.length] = child;
-            children = newChildren;
+            children.add(child);
         }
         return children;
     }
 
     public int countFamily() {
-        return children.length + 2;
+        return children.size() + 2;
     }
 
     @Override
@@ -105,12 +91,12 @@ public class Family {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Family family = (Family) o;
-        return Objects.equals(mother, family.mother) && Objects.equals(father, family.father) && Objects.deepEquals(children, family.children) && Objects.equals(pet, family.pet);
+        return Objects.equals(mother, family.mother) && Objects.equals(father, family.father) && Objects.equals(children, family.children) && Objects.equals(pet, family.pet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mother, father, Arrays.hashCode(children), pet);
+        return Objects.hash(mother, father, children, pet);
     }
 
     @SuppressWarnings({"deprecation", "removal"})
@@ -124,11 +110,10 @@ public class Family {
     @Override
     public String toString() {
         return "Family{" +
-                "mother=" + mother.toString() +
-                ", father=" + father.toString() +
-                ", children=" + Arrays.toString(children) +
-                ", pet=" + (pet != null ? pet.toString() : "null") +
+                "mother=" + mother +
+                ", father=" + father +
+                ", children=" + children +
+                ", pet=" + pet +
                 '}';
     }
-
 }

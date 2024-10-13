@@ -2,7 +2,8 @@ package hw01;
 
 import hw02.Family;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -14,17 +15,16 @@ public class Human {
     private Integer iq;
     private Pet pet;
     private Family family;
-    private String[][] schedule;
+    private Map<DayOfWeek, String> schedule;
 
     public Human(String name, String surname, Integer dateOfBirthYear, Family family) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
         this.family = family;
-        this.schedule = new String[7][2];
-        for (int i = 0; i < schedule.length; i++) {
-            schedule[i][0] = DayOfWeek.values()[i].name();
-            schedule[i][1] = "Empty";
+        this.schedule = new HashMap<>();
+        for (DayOfWeek day : DayOfWeek.values()) {
+            schedule.put(day, "Empty");
         }
     }
 
@@ -35,29 +35,67 @@ public class Human {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
-        this.schedule = new String[7][2];
-        for (int i = 0; i < schedule.length; i++) {
-            schedule[i][0] = DayOfWeek.values()[i].name();
-            schedule[i][1] = "Empty";
+        this.schedule = new HashMap<>();
+        for (DayOfWeek day : DayOfWeek.values()) {
+            schedule.put(day, "Empty");
         }
     }
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, String[][] schedule) {
+    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirthYear = dateOfBirthYear;
         setIq(iq);
         this.pet = pet;
         this.family = family;
-        this.schedule = (schedule != null) ? schedule : new String[7][2];
+        this.schedule = (schedule != null) ? schedule : new HashMap<>();
     }
 
-    public String[][] getSchedule() {
+    public Map<DayOfWeek, String> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(String[][] schedule) {
-        this.schedule = (schedule != null) ? schedule : new String[7][2];
+    public void greetPet() {
+        System.out.println("Hello, " + pet.getNickname());
+    }
+
+    public void addToSchedule(DayOfWeek day, String activity) {
+        int dayIndex = day.ordinal();
+        if (!"Empty".equals(schedule.get(day))) {
+            System.out.println("This day already has an activity: " + schedule.get(day));
+            return;
+        }
+        schedule.put(day, activity);
+    }
+
+    public void describePet() {
+        if (pet != null) {
+            if (pet.getTrickLevel() > 50) {
+                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is very sly.");
+            } else {
+                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is almost not sly.");
+            }
+        } else {
+            System.out.println("I don't have a pet.");
+        }
+    }
+
+    public void feedPet(boolean isHungry) {
+        if (!isHungry) {
+            Random random = new Random();
+            int pseudorandomNumber = random.nextInt(101);
+            if (pseudorandomNumber > pet.getTrickLevel()) {
+                System.out.println("Hm... I will feed " + pet.getNickname());
+            } else {
+                System.out.println("I think " + pet.getNickname() + " is not hungry.");
+            }
+        } else {
+            System.out.println("Hm... I will feed " + pet.getNickname());
+        }
+    }
+
+    public void setSchedule(Map<DayOfWeek, String> schedule) {
+        this.schedule = (schedule != null) ? schedule : new HashMap<>();
     }
 
     public String getName() {
@@ -114,44 +152,25 @@ public class Human {
         this.family = family;
     }
 
-    public void greetPet() {
-        System.out.println("Hello, " + pet.getNickname());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(dateOfBirthYear, human.dateOfBirthYear) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.equals(schedule, human.schedule);
     }
 
-    public void addToSchedule(DayOfWeek day, String activity) {
-        int dayIndex = day.ordinal();
-        if (!"Empty".equals(schedule[dayIndex][1])) {
-            System.out.println("This day already has an activity: " + schedule[dayIndex][1]);
-            return;
-        }
-        schedule[dayIndex][1] = activity;
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, dateOfBirthYear, iq, pet, family, schedule);
     }
 
-    public void describePet() {
-        if (pet != null) {
-            if (pet.getTrickLevel() > 50) {
-                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is very sly.");
-            } else {
-                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is almost not sly.");
-            }
-        } else {
-            System.out.println("I don't have a pet.");
-        }
-    }
+    @SuppressWarnings({"deprecation", "removal"})
 
-
-    public void feedPet(boolean isHungry) {
-        if (!isHungry) {
-            Random random = new Random();
-            int pseudorandomNumber = random.nextInt(101);
-            if (pseudorandomNumber > pet.getTrickLevel()) {
-                System.out.println("Hm... I will feed " + pet.getNickname());
-            } else {
-                System.out.println("I think " + pet.getNickname() + " is not hungry.");
-            }
-        } else {
-            System.out.println("Hm... I will feed " + pet.getNickname());
-        }
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
+        super.finalize();
     }
 
     @Override
@@ -163,27 +182,7 @@ public class Human {
                 ", iq=" + iq +
                 ", pet=" + pet +
                 ", family=" + family +
-                ", schedule=" + (schedule != null ? Arrays.deepToString(schedule) : "null") +
+                ", schedule=" + schedule +
                 '}';
-    }
-
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Human human = (Human) o;
-        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(dateOfBirthYear, human.dateOfBirthYear) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.deepEquals(schedule, human.schedule);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, surname, dateOfBirthYear, iq, pet, family, Arrays.deepHashCode(schedule));
-    }
-
-    @SuppressWarnings({"deprecation", "removal"})
-
-    @Override
-    protected void finalize() throws Throwable {
-        System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
-        super.finalize();
     }
 }
