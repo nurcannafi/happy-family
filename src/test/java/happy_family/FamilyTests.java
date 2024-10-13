@@ -1,21 +1,17 @@
-package hw02;
-
-import hw01.Human;
-import hw01.Pet;
-import hw01.Dog;
+package happy_family;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FamilyTests {
+class FamilyTests {
 
     private Family family;
     private Human mother;
@@ -26,7 +22,7 @@ public class FamilyTests {
     private Set<Pet> pets;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         mother = new Human("Jane", "Doe", 1975);
         father = new Human("Jon", "Doe", 1972);
         child1 = new Human("Jack", "Doe", 2000);
@@ -44,8 +40,8 @@ public class FamilyTests {
     }
 
     @Test
-    public void deleteChildWithIndexSuccessTest() {
-        assertTrue(family.deleteChild(0));
+    void deleteChildWithIndexSuccessTest() {
+        family.deleteChild(0);
         List<Human> twoChild = family.getChildren();
         assertEquals(2, twoChild.size());
         assertEquals(child2, twoChild.get(0));
@@ -53,9 +49,8 @@ public class FamilyTests {
     }
 
     @Test
-    public void deleteChildWithIndexFailureTest() {
-        assertFalse(family.deleteChild(5));
-
+    void deleteChildWithIndexFailureTest() {
+        family.deleteChild(5);
         List<Human> children = family.getChildren();
         assertEquals(3, children.size());
         assertEquals(child1, children.get(0));
@@ -64,7 +59,7 @@ public class FamilyTests {
     }
 
     @Test
-    public void deleteChildWithObjectSuccessTest() {
+    void deleteChildWithObjectSuccessTest() {
         assertTrue(family.deleteChild(child2));
         List<Human> twoChild = family.getChildren();
         assertEquals(2, twoChild.size());
@@ -73,7 +68,7 @@ public class FamilyTests {
     }
 
     @Test
-    public void deleteChildWithObjectFailureTest() {
+    void deleteChildWithObjectFailureTest() {
         Human imaginaryChild = new Human("Imaginary", "Child", 2010);
         assertFalse(family.deleteChild(imaginaryChild));
 
@@ -85,7 +80,7 @@ public class FamilyTests {
     }
 
     @Test
-    public void addChildTest() {
+    void addChildTest() {
         family.addChild(child3);
         assertEquals(4, family.getChildren().size());
         family.addChild(null);
@@ -93,7 +88,7 @@ public class FamilyTests {
     }
 
     @Test
-    public void countFamilyTest() {
+    void countFamilyTest() {
         assertEquals(5, family.countFamily());
         family.addChild(child3);
         assertEquals(6, family.countFamily());
@@ -108,7 +103,7 @@ public class FamilyTests {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         String expected = "Family{" +
                 "mother=" + mother +
                 ", father=" + father +

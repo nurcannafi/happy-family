@@ -1,4 +1,4 @@
-package hw01;
+package happy_family;
 
 public enum Species {
     CAT,

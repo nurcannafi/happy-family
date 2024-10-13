@@ -1,12 +1,10 @@
-package hw02;
+package happy_family;
 
-import hw01.Human;
-import hw01.Pet;
-
-import java.util.List;
-import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.Objects;
 
 public class Family {
@@ -63,16 +61,15 @@ public class Family {
         this.pet = pet;
     }
 
-    public boolean deleteChild(int index) {
+    public Optional<Human> deleteChild(int index) {
         if (index < 0 || index >= children.size()) {
-            return false;
+            return Optional.empty();
         }
-        children.remove(index);
-        return true;
+        return Optional.of(children.remove(index));
     }
 
     public boolean deleteChild(Human child) {
-            return children.remove(child);
+        return children.remove(child);
     }
 
     public List<Human> addChild(Human child) {
@@ -91,7 +88,8 @@ public class Family {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Family family = (Family) o;
-        return Objects.equals(mother, family.mother) && Objects.equals(father, family.father) && Objects.equals(children, family.children) && Objects.equals(pet, family.pet);
+        return Objects.equals(mother, family.mother) && Objects.equals(father, family.father)
+                && Objects.equals(children, family.children) && Objects.equals(pet, family.pet);
     }
 
     @Override
@@ -104,7 +102,6 @@ public class Family {
     @Override
     protected void finalize() throws Throwable {
         System.out.println("Family object is being removed: " + this);
-        super.finalize();
     }
 
     @Override

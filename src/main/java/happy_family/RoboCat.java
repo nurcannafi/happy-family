@@ -1,9 +1,16 @@
-package hw01;
+package happy_family;
+
+import java.util.Set;
 
 public class RoboCat extends Pet {
 
     public RoboCat(String nickname) {
         super(nickname);
+        setSpecies(Species.ROBOCAT);
+    }
+
+    public RoboCat(String nickname, Integer age, Integer trickLevel, Set<String> habits) {
+        super(nickname, age, trickLevel, habits);
         setSpecies(Species.ROBOCAT);
     }
 
