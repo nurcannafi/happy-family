@@ -116,4 +116,11 @@ public class Family {
                 ", pet=" + pet +
                 '}';
     }
+    public Set<Pet> getPets() {
+        return pet;
+    }
+
+    public void setPets(Set<Pet> pets) {
+        this.pet = pets;
+    }
 }

@@ -2,6 +2,7 @@ package hw01;
 
 import hw02.Family;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -171,6 +172,13 @@ public class Human {
     protected void finalize() throws Throwable {
         System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
         super.finalize();
+    }
+    public int getAge() {
+        if (dateOfBirthYear == null) {
+            return 0;
+        }
+        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        return currentYear - dateOfBirthYear;
     }
 
     @Override
