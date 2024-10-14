@@ -3,11 +3,13 @@ package dao_layer.controller;
 import happy_family.Human;
 import happy_family.Pet;
 import happy_family.Family;
-import dao_layer.sevrice.FamilyService;
+
+import dao_layer.service.FamilyService;
 
 import java.util.List;
 
 public class FamilyController {
+
     private FamilyService familyService;
 
     public FamilyController(FamilyService familyService) {
@@ -50,14 +52,12 @@ public class FamilyController {
 
     public Family bornChild(Family family, String maleName, String femaleName) {
         validateFamily(family);
-        Family updatedFamily = familyService.bornChild(family, maleName, femaleName);
-        return updatedFamily;
+        return familyService.bornChild(family, maleName, femaleName);
     }
 
     public Family adoptChild(Family family, Human child) {
         validateFamily(family);
-        Family updatedFamily = familyService.adoptChild(family, child);
-        return updatedFamily;
+        return familyService.adoptChild(family, child);
     }
 
     public void deleteAllChildrenOlderThen(int age) {

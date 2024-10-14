@@ -3,10 +3,16 @@ package dao_layer.dao;
 import happy_family.Family;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
-    private List<Family> families = new ArrayList<>();
+
+    private List<Family> families;
+
+    public CollectionFamilyDao() {
+        families = new ArrayList<>();
+    }
 
     @Override
     public List<Family> getAllFamilies() {
@@ -22,7 +28,7 @@ public class CollectionFamilyDao implements FamilyDao {
     }
 
     @Override
-    public Boolean deleteFamily(Integer index) {
+    public Boolean deleteFamily(int index) {
         if (index >= 0 && index < families.size()) {
             families.remove(index);
             return true;
@@ -37,11 +43,13 @@ public class CollectionFamilyDao implements FamilyDao {
 
     @Override
     public void saveFamily(Family family) {
-        if (families.contains(family)) {
-            int index = families.indexOf(family);
+        int index = families.indexOf(family);
+
+        if (index != -1) {
             families.set(index, family);
         } else {
             families.add(family);
         }
+
     }
 }
