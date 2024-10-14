@@ -1,18 +1,18 @@
-package dao_layer.sevrice;
+package dao_layer.service;
 
 import happy_family.Human;
 import happy_family.Pet;
 import happy_family.Family;
+
 import dao_layer.dao.FamilyDao;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
 public class FamilyService {
 
-    private FamilyDao familyDao;
-
-
+    private final FamilyDao familyDao;
 
     public FamilyService(FamilyDao familyDao) {
         this.familyDao = familyDao;
@@ -24,9 +24,8 @@ public class FamilyService {
 
     public void displayAllFamilies() {
         List<Family> families = getAllFamilies();
-        for (int i = 0; i < families.size(); i++) {
-            System.out.println(i + ": " + families.get(i));
-        }
+        families.stream()
+                .forEach(family -> System.out.println(families.indexOf(family) + " : " + family));
     }
 
     public List<Family> getFamiliesBiggerThan(int size) {
@@ -48,7 +47,7 @@ public class FamilyService {
     }
 
     public void createNewFamily(Human parent1, Human parent2) {
-        Family family = new Family(parent1,parent2);
+        Family family = new Family(parent1, parent2);
         familyDao.saveFamily(family);
     }
 
@@ -81,6 +80,7 @@ public class FamilyService {
             familyDao.saveFamily(family);
         }
     }
+
     public int count() {
         return getAllFamilies().size();
     }

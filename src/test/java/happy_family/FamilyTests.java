@@ -104,12 +104,8 @@ class FamilyTests {
 
     @Test
     void testToString() {
-        String expected = "Family{" +
-                "mother=" + mother +
-                ", father=" + father +
-                ", children=" + family.getChildren() +
-                ", pet=" + pets +
-                '}';
+        String expected = String.format("Family{mother=%s, father=%s, children=%s, pet=%s}",
+                mother, father, family.getChildren(), pets);
 
         assertEquals(expected, family.toString());
     }
