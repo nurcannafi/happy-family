@@ -1,5 +1,6 @@
 package happy_family;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -127,6 +128,9 @@ public class Human {
         }
     }
 
+    public Integer getAge(){
+        return LocalDate.now().getYear()-dateOfBirthYear;
+    }
     public Pet getPet() {
         return pet;
     }
