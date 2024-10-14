@@ -7,15 +7,15 @@ public class Woman extends Human {
     public Woman() {
     }
 
-    public Woman(String name, String surname, Integer dateOfBirthYear) {
+    public Woman(String name, String surname, Long dateOfBirthYear) {
         super(name, surname, dateOfBirthYear);
     }
 
-    public Woman(String name, String surname, Integer dateOfBirthYear, Family family) {
+    public Woman(String name, String surname, Long dateOfBirthYear, Family family) {
         super(name, surname, dateOfBirthYear, family);
     }
 
-    public Woman(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek,String> schedule) {
+    public Woman(String name, String surname, Long dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
         super(name, surname, dateOfBirthYear, iq, pet, family, schedule);
     }
 
@@ -27,4 +27,5 @@ public class Woman extends Human {
     public void greetPet() {
         System.out.println(getName() + " greets pet");
     }
+
 }

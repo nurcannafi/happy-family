@@ -5,14 +5,16 @@ import happy_family.Pet;
 import happy_family.Family;
 import dao_layer.dao.FamilyDao;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
+
 public class FamilyService {
 
-    private FamilyDao familyDao;
-
-
+    private final FamilyDao familyDao;
 
     public FamilyService(FamilyDao familyDao) {
         this.familyDao = familyDao;
@@ -48,7 +50,7 @@ public class FamilyService {
     }
 
     public void createNewFamily(Human parent1, Human parent2) {
-        Family family = new Family(parent1,parent2);
+        Family family = new Family(parent1, parent2);
         familyDao.saveFamily(family);
     }
 
@@ -63,7 +65,7 @@ public class FamilyService {
         } else {
             child.setName(femaleName);
         }
-        child.setDateOfBirthYear(LocalDate.now().getYear());
+        child.setBirthDate(System.currentTimeMillis());
         family.addChild(child);
         familyDao.saveFamily(family);
         return family;
@@ -77,10 +79,20 @@ public class FamilyService {
 
     public void deleteAllChildrenOlderThen(int age) {
         for (Family family : getAllFamilies()) {
-            family.getChildren().removeIf(child -> child.getAge() > age);
+            family.getChildren().removeIf(child -> {
+                LocalDate birthDateLocal = Instant.ofEpochMilli(child.getBirthDate())
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+                LocalDate currentDate = LocalDate.now();
+                int childAge = Period.between(birthDateLocal, currentDate).getYears();
+
+                // Return true if the child's age is greater than the provided age
+                return childAge > age;
+            });
             familyDao.saveFamily(family);
         }
     }
+
     public int count() {
         return getAllFamilies().size();
     }

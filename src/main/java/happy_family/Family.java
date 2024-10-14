@@ -106,11 +106,7 @@ public class Family {
 
     @Override
     public String toString() {
-        return "Family{" +
-                "mother=" + mother +
-                ", father=" + father +
-                ", children=" + children +
-                ", pet=" + pet +
-                '}';
+        return String.format("Family{mother=%s, father=%s, children=%s, pet=%s}", mother, father, children, pet);
     }
+
 }

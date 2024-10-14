@@ -5,18 +5,19 @@ import java.util.Map;
 public class Man extends Human {
 
     public Man() {
+        super("Default Name", "Default Surname", 0L);
     }
 
-    public Man(String name, String surname, Integer dateOfBirthYear) {
-        super(name, surname, dateOfBirthYear);
+    public Man(String name, String surname, long birthDate) {
+        super(name, surname, birthDate);
     }
 
-    public Man(String name, String surname, Integer dateOfBirthYear, Family family) {
-        super(name, surname, dateOfBirthYear, family);
+    public Man(String name, String surname, long birthDate, Family family) {
+        super(name, surname, birthDate, family);
     }
 
-    public Man(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
-        super(name, surname, dateOfBirthYear, iq, pet, family, schedule);
+    public Man(String name, String surname, long birthDate, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
+        super(name, surname, birthDate, iq, pet, family, schedule);
     }
 
     public void repairCar() {

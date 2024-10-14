@@ -1,25 +1,26 @@
 package happy_family;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 public class Human {
 
     private String name;
     private String surname;
-    private Integer dateOfBirthYear;
+    private Long birthDate;
     private Integer iq;
     private Pet pet;
     private Family family;
     private Map<DayOfWeek, String> schedule;
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Family family) {
+    public Human(String name, String surname, Long birthDate, Family family) {
         this.name = name;
         this.surname = surname;
-        this.dateOfBirthYear = dateOfBirthYear;
+        this.birthDate = birthDate;
         this.family = family;
         this.schedule = new HashMap<>();
     }
@@ -27,21 +28,28 @@ public class Human {
     public Human() {
     }
 
-    public Human(String name, String surname, Integer dateOfBirthYear) {
+    public Human(String name, String surname, Long birthDate) {
         this.name = name;
         this.surname = surname;
-        this.dateOfBirthYear = dateOfBirthYear;
+        this.birthDate =  birthDate;
         this.schedule = new HashMap<>();
     }
 
-    public Human(String name, String surname, Integer dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
+    public Human(String name, String surname, Long birthDate, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
         this.name = name;
         this.surname = surname;
-        this.dateOfBirthYear = dateOfBirthYear;
+        this.birthDate = birthDate;
         setIq(iq);
         this.pet = pet;
         this.family = family;
         this.schedule = (schedule != null) ? schedule : new HashMap<>();
+    }
+
+    public String describeAge() {
+        LocalDate birthDateLocal = LocalDate.ofEpochDay(this.birthDate / 86400000L);
+        LocalDate currentDate = LocalDate.now();
+        Period age = Period.between(birthDateLocal, currentDate);
+        return String.format("%d years, %d months, and %d days old", age.getYears(), age.getMonths(), age.getDays());
     }
 
     public void greetPet() {
@@ -70,8 +78,7 @@ public class Human {
 
     public void feedPet(boolean isHungry) {
         if (!isHungry) {
-            Random random = new Random();
-            int pseudorandomNumber = random.nextInt(101);
+            int pseudorandomNumber = (int) (Math.random() * 101);
             if (pseudorandomNumber > pet.getTrickLevel()) {
                 System.out.println("Hm... I will feed " + pet.getNickname());
             } else {
@@ -106,12 +113,12 @@ public class Human {
         this.surname = surname;
     }
 
-    public Integer getDateOfBirthYear() {
-        return dateOfBirthYear;
+    public Long getBirthDate() {
+        return birthDate;
     }
 
-    public void setDateOfBirthYear(Integer dateOfBirthYear) {
-        this.dateOfBirthYear = dateOfBirthYear;
+    public void setBirthDate(Long birthDate) {
+        this.birthDate = birthDate;
     }
 
     public Integer getIq() {
@@ -128,9 +135,6 @@ public class Human {
         }
     }
 
-    public Integer getAge(){
-        return LocalDate.now().getYear()-dateOfBirthYear;
-    }
     public Pet getPet() {
         return pet;
     }
@@ -152,12 +156,12 @@ public class Human {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(dateOfBirthYear, human.dateOfBirthYear) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.equals(schedule, human.schedule);
+        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(birthDate, human.birthDate) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.equals(schedule, human.schedule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, dateOfBirthYear, iq, pet, family, schedule);
+        return Objects.hash(name, surname, birthDate, iq, pet, family, schedule);
     }
 
     @SuppressWarnings({"deprecation", "removal"})
@@ -169,14 +173,10 @@ public class Human {
 
     @Override
     public String toString() {
-        return "Human{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", dateOfBirthYear=" + dateOfBirthYear +
-                ", iq=" + iq +
-                ", pet=" + pet +
-                ", family=" + family +
-                ", schedule=" + schedule +
-                '}';
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate birthDateLocal = LocalDate.ofEpochDay(this.birthDate / 86400000L);
+        String formattedBirthDate = birthDateLocal.format(formatter);
+        return String.format("Human{name='%s', surname='%s', birthDate=%s, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, formattedBirthDate, iq, pet, family, schedule);
     }
+
 }

@@ -14,7 +14,6 @@ public class FamilyController {
         this.familyService = familyService;
     }
 
-    // for controlling null value
     private void validateFamily(Family family) {
         if (family == null) {
             throw new IllegalArgumentException("Family cannot be null.");
