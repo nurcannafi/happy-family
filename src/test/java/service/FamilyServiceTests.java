@@ -174,7 +174,7 @@ class FamilyServiceTests {
         pets.add(cat);
         family1.setPet(pets);
 
-        List<Pet> domesticPets = familyService.getPets(0);
+        Set<Pet> domesticPets = familyService.getPets(0);
         assertEquals(2, domesticPets.size());
         assertTrue(domesticPets.contains(dog));
         assertTrue(domesticPets.contains(cat));
@@ -185,7 +185,7 @@ class FamilyServiceTests {
         Pet dog = new Dog("Enzo");
         familyService.addPet(1, dog);
 
-        List<Pet> pet = familyService.getPets(1);
+        Set<Pet> pet = familyService.getPets(1);
         assertNotNull(pet);
         assertEquals(1, pet.size());
         assertTrue(pet.contains(dog));

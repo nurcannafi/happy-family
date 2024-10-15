@@ -14,5 +14,5 @@ public interface FamilyDao {
 
     Boolean deleteFamily(Family family);
 
-    void saveFamily(Family family);
+    Family saveFamily(Family family);
 }

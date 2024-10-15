@@ -32,7 +32,7 @@ public class Human {
     public Human(String name, String surname, Long birthDate) {
         this.name = name;
         this.surname = surname;
-        this.birthDate =  birthDate;
+        this.birthDate = birthDate;
         this.schedule = new HashMap<>();
     }
 
@@ -170,7 +170,10 @@ public class Human {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(birthDate, human.birthDate) && Objects.equals(iq, human.iq) && Objects.equals(pet, human.pet) && Objects.equals(family, human.family) && Objects.equals(schedule, human.schedule);
+        return Objects.equals(name, human.name) && Objects.equals(surname, human.surname)
+                && Objects.equals(birthDate, human.birthDate) && Objects.equals(iq, human.iq)
+                && Objects.equals(pet, human.pet) && Objects.equals(family, human.family)
+                && Objects.equals(schedule, human.schedule);
     }
 
     @Override
@@ -190,7 +193,8 @@ public class Human {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate birthDateLocal = LocalDate.ofEpochDay(this.birthDate / 86400000L);
         String formattedBirthDate = birthDateLocal.format(formatter);
-        return String.format("Human{name='%s', surname='%s', birthDate=%s, iq=%d, pet=%s, family=%s, schedule=%s}", name, surname, formattedBirthDate, iq, pet, family, schedule);
+        return String.format("Human{name='%s', surname='%s', birthDate=%s, iq=%d, pet=%s, family=%s, schedule=%s}",
+                name, surname, formattedBirthDate, iq, pet, family, schedule);
     }
 
 }
