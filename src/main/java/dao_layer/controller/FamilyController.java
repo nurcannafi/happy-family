@@ -8,7 +8,7 @@ import dao_layer.sevrice.FamilyService;
 import java.util.List;
 
 public class FamilyController {
-    private FamilyService familyService;
+    private final FamilyService familyService;
 
     public FamilyController(FamilyService familyService) {
         this.familyService = familyService;

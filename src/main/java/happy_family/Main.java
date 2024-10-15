@@ -65,7 +65,6 @@ public class Main {
             }
         }
         FamilyController controller = new FamilyController(new FamilyService(new CollectionFamilyDao()));
-
         // Creating families
         Human mother1 = new Human("Maria", "Blamberg", 1978);
         Human father1 = new Human("John", "Doe", 1977);
@@ -105,7 +104,7 @@ public class Main {
         System.out.println("\nFamilies with more than three members:");
         controller.getFamiliesBiggerThan(3).forEach(System.out::println);
 
-        // Child birth operation
+        // Childbirth operation
         Family familyToAddChild = controller.getFamilyById(0);
         controller.bornChild(familyToAddChild, "Charlie", "Ella"); // Adding a new child to Family 1
 
