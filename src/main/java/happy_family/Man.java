@@ -8,15 +8,15 @@ public class Man extends Human {
         super("Default Name", "Default Surname", 0L);
     }
 
-    public Man(String name, String surname, long birthDate) {
+    public Man(String name, String surname, Long birthDate) {
         super(name, surname, birthDate);
     }
 
-    public Man(String name, String surname, long birthDate, Family family) {
+    public Man(String name, String surname, Long birthDate, Family family) {
         super(name, surname, birthDate, family);
     }
 
-    public Man(String name, String surname, long birthDate, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
+    public Man(String name, String surname, Long birthDate, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
         super(name, surname, birthDate, iq, pet, family, schedule);
     }
 

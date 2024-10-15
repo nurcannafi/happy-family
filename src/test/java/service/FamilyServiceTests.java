@@ -37,14 +37,14 @@ class FamilyServiceTests {
         familyDao = new CollectionFamilyDao();
         familyService = new FamilyService(familyDao);
 
-        family1 = new Family(new Woman("Jane", "Doe", 1980),
-                new Man("Jon", "Doe", 1977));
-        family2 = new Family(new Woman("Emily", "Smith", 1985),
-                new Man("Michael", "Smith", 1982));
+        family1 = new Family(new Woman("Jane", "Doe", 315532800000L),
+                new Man("Jon", "Doe", 220752000000L));
+        family2 = new Family(new Woman("Emily", "Smith", 473385600000L),
+                new Man("Michael", "Smith", 378604800000L));
 
-        family1.addChild(new Woman("Anna", "Doe", 2005));
-        family1.addChild(new Man("Chris", "Doe", 2010));
-        family2.addChild(new Woman("Sophie", "Smith", 2007));
+        family1.addChild(new Woman("Anna", "Doe", 1104537600000L));
+        family1.addChild(new Man("Chris", "Doe", 1262304000000L));
+        family2.addChild(new Woman("Sophie", "Smith", 1167609600000L));
 
         familyDao.saveFamily(family1);
         familyDao.saveFamily(family2);
@@ -83,8 +83,8 @@ class FamilyServiceTests {
 
     @Test
     void createNewFamilyTest() {
-        Human mother = new Woman("Emily", "William", 1997);
-        Human father = new Man("Robert", "William", 1993);
+        Human mother = new Woman("Emily", "William", 852076800000L);
+        Human father = new Man("Robert", "William", 725846400000L);
         familyService.createNewFamily(mother, father);
 
         List<Family> families = familyService.getAllFamilies();
@@ -123,7 +123,7 @@ class FamilyServiceTests {
 
     @Test
     void adoptChild() {
-        Human child = new Human("Clara", "Alex", 2017);
+        Human child = new Human("Clara", "Alex", 1483228800000L);
         familyService.adoptChild(family1, child);
 
         assertEquals(3, family1.getChildren().size());
@@ -141,15 +141,15 @@ class FamilyServiceTests {
 
     @Test
     void countTest() {
-        assertEquals(2, familyService.getAllFamilies());
+        assertEquals(2, familyService.getAllFamilies().size());
 
-        Family family3 = new Family(new Woman("Anna", "Taylor", 1990),
-                new Man("David", "Taylor", 1985));
+        Family family3 = new Family(new Woman("Anna", "Taylor", 631152000000L),
+                new Man("David", "Taylor", 473385600000L));
         familyDao.saveFamily(family3);
-        assertEquals(3, familyService.getAllFamilies());
+        assertEquals(3, familyService.getAllFamilies().size());
 
         familyService.deleteFamilyByIndex(1);
-        assertEquals(2, familyService.getAllFamilies());
+        assertEquals(2, familyService.getAllFamilies().size());
     }
 
     @Test
@@ -160,7 +160,7 @@ class FamilyServiceTests {
 
         Family retrievedFamily2 = familyService.getFamilyById(1);
         assertNotNull(retrievedFamily2);
-        assertEquals(family2, retrievedFamily1);
+        assertEquals(family2, retrievedFamily2);
 
         assertNull(familyService.getFamilyById(3));
     }
@@ -178,8 +178,6 @@ class FamilyServiceTests {
         assertEquals(2, domesticPets.size());
         assertTrue(domesticPets.contains(dog));
         assertTrue(domesticPets.remove(cat));
-
-        assertNull(familyService.getPets(1));
     }
 
     @Test

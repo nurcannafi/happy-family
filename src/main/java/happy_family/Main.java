@@ -2,7 +2,7 @@ package happy_family;
 
 import dao_layer.controller.FamilyController;
 import dao_layer.dao.CollectionFamilyDao;
-import dao_layer.sevrice.FamilyService;
+import dao_layer.service.FamilyService;
 
 public class Main {
 
@@ -62,21 +62,21 @@ public class Main {
 
         FamilyController controller = new FamilyController(new FamilyService(new CollectionFamilyDao()));
 
-        Human mother1 = new Human("Maria", "Blamberg", 252460800000L); // 1978
-        Human father1 = new Human("John", "Doe", 225206400000L); // 1977
-        controller.createNewFamily(mother1, father1); // Family 1
+        Human mother1 = new Human("Maria", "Blamberg", 252460800000L);
+        Human father1 = new Human("John", "Doe", 225206400000L);
+        controller.createNewFamily(mother1, father1);
 
-        Human mother2 = new Human("Anna", "Smith", 473385600000L); // 1985
-        Human father2 = new Human("Michael", "Johnson", 452390400000L); // 1984
-        controller.createNewFamily(mother2, father2); // Family 2
+        Human mother2 = new Human("Anna", "Smith", 473385600000L);
+        Human father2 = new Human("Michael", "Johnson", 452390400000L);
+        controller.createNewFamily(mother2, father2);
 
-        Human mother3 = new Human("Emily", "Davis", 631152000000L); // 1990
-        Human father3 = new Human("Robert", "Brown", 599616000000L); // 1989
-        controller.createNewFamily(mother3, father3); // Family 3
+        Human mother3 = new Human("Emily", "Davis", 631152000000L);
+        Human father3 = new Human("Robert", "Brown", 599616000000L);
+        controller.createNewFamily(mother3, father3);
 
-        controller.getFamilyById(0).addChild(new Human("Alice", "Doe", 1262304000000L)); // 2010
-        controller.getFamilyById(0).addChild(new Human("Bob", "Doe", 1325376000000L)); // 2012
-        controller.getFamilyById(1).addChild(new Human("Chris", "Smith", 1420070400000L)); // 2015
+        controller.getFamilyById(0).addChild(new Human("Alice", "Doe", 1262304000000L));
+        controller.getFamilyById(0).addChild(new Human("Bob", "Doe", 1325376000000L));
+        controller.getFamilyById(1).addChild(new Human("Chris", "Smith", 1420070400000L));
 
         System.out.println("All Families:");
         controller.displayAllFamilies();

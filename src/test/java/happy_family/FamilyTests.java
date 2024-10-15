@@ -3,6 +3,7 @@ package happy_family;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,11 +24,16 @@ class FamilyTests {
 
     @BeforeEach
     void setUp() {
-        mother = new Human("Jane", "Doe", 1975);
-        father = new Human("Jon", "Doe", 1972);
-        child1 = new Human("Jack", "Doe", 2000);
-        child2 = new Human("Jill", "Doe", 2005);
-        child3 = new Human("Leonel", "Messi", 2003);
+        mother = new Human("Jane", "Doe",
+                LocalDate.of(1975, 1, 1).toEpochDay() * 86400000L);
+        father = new Human("Jon", "Doe",
+                LocalDate.of(1972, 1, 1).toEpochDay() * 86400000L);
+        child1 = new Human("Jack", "Doe",
+                LocalDate.of(2000, 1, 1).toEpochDay() * 86400000L);
+        child2 = new Human("Jill", "Doe",
+                LocalDate.of(2005, 1, 1).toEpochDay() * 86400000L);
+        child3 = new Human("Leonel", "Messi",
+                LocalDate.of(2003, 1, 1).toEpochDay() * 86400000L);
         Pet pet = new Dog("Rock");
         pets = new HashSet<>();
         pets.add(pet);
@@ -69,7 +75,8 @@ class FamilyTests {
 
     @Test
     void deleteChildWithObjectFailureTest() {
-        Human imaginaryChild = new Human("Imaginary", "Child", 2010);
+        Human imaginaryChild = new Human("Imaginary", "Child",
+                LocalDate.of(2010, 1, 1).toEpochDay() * 86400000L);
         assertFalse(family.deleteChild(imaginaryChild));
 
         List<Human> threeChild = family.getChildren();
