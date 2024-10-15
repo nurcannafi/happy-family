@@ -10,7 +10,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 public class FamilyService {
@@ -49,9 +51,9 @@ public class FamilyService {
                 .count();
     }
 
-    public void createNewFamily(Human parent1, Human parent2) {
+    public Family createNewFamily(Human parent1, Human parent2) {
         Family family = new Family(parent1, parent2);
-        familyDao.saveFamily(family);
+        return familyDao.saveFamily(family);
     }
 
     public boolean deleteFamilyByIndex(int index) {
@@ -67,14 +69,12 @@ public class FamilyService {
         }
         child.setBirthDate(System.currentTimeMillis());
         family.addChild(child);
-        familyDao.saveFamily(family);
-        return family;
+        return familyDao.saveFamily(family);
     }
 
     public Family adoptChild(Family family, Human child) {
         family.addChild(child);
-        familyDao.saveFamily(family);
-        return family;
+        return familyDao.saveFamily(family);
     }
 
     public void deleteAllChildrenOlderThen(int age) {
@@ -96,9 +96,9 @@ public class FamilyService {
         return familyDao.getFamilyByIndex(id);
     }
 
-    public List<Pet> getPets(int familyIndex) {
+    public Set<Pet> getPets(int familyIndex) {
         Family family = getFamilyById(familyIndex);
-        return family != null ? family.getPet().stream().toList() : null;
+        return family != null ? family.getPet() : Collections.emptySet();
     }
 
     public void addPet(int familyIndex, Pet pet) {

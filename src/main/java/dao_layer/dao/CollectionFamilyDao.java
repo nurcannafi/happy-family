@@ -3,12 +3,11 @@ package dao_layer.dao;
 import happy_family.Family;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
 
-    private List<Family> families;
+    private final List<Family> families;
 
     public CollectionFamilyDao() {
         families = new ArrayList<>();
@@ -42,7 +41,7 @@ public class CollectionFamilyDao implements FamilyDao {
     }
 
     @Override
-    public void saveFamily(Family family) {
+    public Family saveFamily(Family family) {
         int index = families.indexOf(family);
 
         if (index != -1) {
@@ -50,6 +49,7 @@ public class CollectionFamilyDao implements FamilyDao {
         } else {
             families.add(family);
         }
+        return family;
 
     }
 }

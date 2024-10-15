@@ -7,6 +7,7 @@ import happy_family.Family;
 import dao_layer.service.FamilyService;
 
 import java.util.List;
+import java.util.Set;
 
 public class FamilyController {
 
@@ -72,7 +73,7 @@ public class FamilyController {
         return familyService.getFamilyById(id);
     }
 
-    public List<Pet> getPets(int familyIndex) {
+    public Set<Pet> getPets(int familyIndex) {
         return familyService.getPets(familyIndex);
     }
 
