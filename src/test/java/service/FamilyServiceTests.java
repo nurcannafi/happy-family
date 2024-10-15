@@ -177,7 +177,7 @@ class FamilyServiceTests {
         List<Pet> domesticPets = familyService.getPets(0);
         assertEquals(2, domesticPets.size());
         assertTrue(domesticPets.contains(dog));
-        assertTrue(domesticPets.remove(cat));
+        assertTrue(domesticPets.contains(cat));
     }
 
     @Test
