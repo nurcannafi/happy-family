@@ -3,6 +3,7 @@ package happy_family;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -45,9 +46,22 @@ public class Human {
         this.schedule = (schedule != null) ? schedule : new HashMap<>();
     }
 
+    public Human(String name, String surname, String birthDateString, Integer iq) {
+        this.name = name;
+        this.surname = surname;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate birthDateLocal = LocalDate.parse(birthDateString, formatter);
+        this.birthDate = birthDateLocal.toEpochDay() * 86400000L;
+        setIq(iq);
+        this.schedule = new HashMap<>();
+    }
+
     public String describeAge() {
         LocalDate birthDateLocal = LocalDate.ofEpochDay(this.birthDate / 86400000L);
         LocalDate currentDate = LocalDate.now();
+        long years = ChronoUnit.YEARS.between(birthDateLocal, currentDate);
+        long months = ChronoUnit.MONTHS.between(birthDateLocal, currentDate) % 12;
+        long days = ChronoUnit.DAYS.between(birthDateLocal, currentDate) % 30;
         Period age = Period.between(birthDateLocal, currentDate);
         return String.format("%d years, %d months, and %d days old", age.getYears(), age.getMonths(), age.getDays());
     }
