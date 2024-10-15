@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class FamilyService {
 
@@ -27,20 +27,20 @@ public class FamilyService {
 
     public void displayAllFamilies() {
         List<Family> families = getAllFamilies();
-        families.stream()
-                .forEach(family -> System.out.println(families.indexOf(family) + " : " + family));
+        IntStream.range(0, families.size())
+                .forEach(family -> System.out.println(family + " : " + families.get(family)));
     }
 
     public List<Family> getFamiliesBiggerThan(int size) {
         return getAllFamilies().stream()
                 .filter(family -> family.countFamily() > size)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Family> getFamiliesLessThan(int size) {
         return getAllFamilies().stream()
                 .filter(family -> family.countFamily() < size)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public long countFamiliesWithMemberNumber(int number) {
@@ -78,19 +78,14 @@ public class FamilyService {
     }
 
     public void deleteAllChildrenOlderThen(int age) {
-        for (Family family : getAllFamilies()) {
-            family.getChildren().removeIf(child -> {
-                LocalDate birthDateLocal = Instant.ofEpochMilli(child.getBirthDate())
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate();
-                LocalDate currentDate = LocalDate.now();
-                int childAge = Period.between(birthDateLocal, currentDate).getYears();
-
-                // Return true if the child's age is greater than the provided age
-                return childAge > age;
-            });
-            familyDao.saveFamily(family);
-        }
+        getAllFamilies().stream().peek(family -> family.getChildren().removeIf(child -> {
+                    LocalDate birthDateLocal = Instant.ofEpochMilli(child.getBirthDate())
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+                    int childAge = Period.between(birthDateLocal, LocalDate.now()).getYears();
+                    return childAge > age;
+                }))
+                .forEach(familyDao::saveFamily);
     }
 
     public int count() {
@@ -103,7 +98,7 @@ public class FamilyService {
 
     public List<Pet> getPets(int familyIndex) {
         Family family = getFamilyById(familyIndex);
-        return family != null ? family.getPet().stream().collect(Collectors.toList()) : null;
+        return family != null ? family.getPet().stream().toList() : null;
     }
 
     public void addPet(int familyIndex, Pet pet) {
