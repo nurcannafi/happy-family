@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FamilyController {
+
     private final FamilyService familyService;
     private final Scanner scanner;
 

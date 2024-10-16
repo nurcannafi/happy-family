@@ -42,7 +42,7 @@ class FamilyTests {
         family.addChild(child1);
         family.addChild(child2);
         family.addChild(child3);
-        family.setPet(pets);
+        family.setPets(pets);
     }
 
     @Test

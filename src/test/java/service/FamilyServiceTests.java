@@ -132,7 +132,7 @@ class FamilyServiceTests {
 
     @Test
     void deleteAllChildrenOlderThanTest() {
-        familyService.deleteAllChildrenOlderThen(17);
+        familyService.deleteAllChildrenOlderThan(17);
 
         assertEquals(1, family1.getChildren().size());
         assertEquals(1, family2.getChildren().size());
@@ -172,7 +172,7 @@ class FamilyServiceTests {
         Set<Pet> pets = new HashSet<>();
         pets.add(dog);
         pets.add(cat);
-        family1.setPet(pets);
+        family1.setPets(pets);
 
         Set<Pet> domesticPets = familyService.getPets(0);
         assertEquals(2, domesticPets.size());
