@@ -12,7 +12,7 @@ public class Family {
     private Human mother;
     private Human father;
     private List<Human> children;
-    private Set<Pet> pet;
+    private Set<Pet> pets;
 
     static {
         System.out.println(Family.class.getSimpleName() + " class loaded.");
@@ -26,7 +26,14 @@ public class Family {
         this.mother = mother;
         this.father = father;
         this.children = new ArrayList<>();
-        this.pet = new HashSet<>();
+        this.pets = new HashSet<>();
+    }
+
+    public Family(String motherName, String motherLastName, int motherBirthYear, int motherBirthMonth, int motherBirthday, int motherIQ, String fatherName, String fatherLastName, int fatherBirthYear, int fatherBirthMonth, int fatherBirthday, int fatherIQ) {
+        this.mother = new Human();
+        this.father = new Human();
+        this.children = new ArrayList<>();
+        this.pets = new HashSet<>();
     }
 
     public Human getMother() {
@@ -53,12 +60,37 @@ public class Family {
         this.children = children;
     }
 
-    public Set<Pet> getPet() {
-        return pet;
+    public Set<Pet> getPets() {
+        return pets;
     }
 
-    public void setPet(Set<Pet> pet) {
-        this.pet = pet;
+    public void setPets(Set<Pet> pets) {
+        this.pets = pets;
+    }
+
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Family: \n")
+                .append("\tMother: ").append(mother.prettyFormat()).append(",\n")
+                .append("\tFather: ").append(father.prettyFormat()).append(",\n")
+                .append("\tChildren: \n");
+
+        for (Human child : children) {
+            sb.append("\t\t").append(child.prettyFormat()).append("\n");
+        }
+
+        sb.append("\tPets: [");
+        int petCount = 0;
+        for (Pet p : pets) {
+            sb.append(p.prettyFormat());
+            petCount++;
+            if (petCount < pets.size()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+
+        return sb.toString();
     }
 
     public Optional<Human> deleteChild(int index) {
@@ -83,21 +115,34 @@ public class Family {
         return children.size() + 2;
     }
 
+    public void removeChildrenOverAge(int age) {
+        children.removeIf(child -> child.getAge() > age);
+    }
+
+    public void bornChild(String boyName, String girlName) {
+        children.add(new Human(boyName, "Unknown", 0L));
+        children.add(new Human(girlName, "Unknown", 0L));
+    }
+
+    public void adoptChild(Human child) {
+        if (child != null) {
+            children.add(child);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Family family = (Family) o;
         return Objects.equals(mother, family.mother) && Objects.equals(father, family.father)
-                && Objects.equals(children, family.children) && Objects.equals(pet, family.pet);
+                && Objects.equals(children, family.children) && Objects.equals(pets, family.pets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mother, father, children, pet);
+        return Objects.hash(mother, father, children, pets);
     }
-
-    @SuppressWarnings({"deprecation", "removal"})
 
     @Override
     protected void finalize() throws Throwable {
@@ -106,7 +151,6 @@ public class Family {
 
     @Override
     public String toString() {
-        return String.format("Family{mother=%s, father=%s, children=%s, pet=%s}", mother, father, children, pet);
+        return String.format("Family{Mother=%s, Father=%s, Children=%s, Pets=%s}", mother, father, children, pets);
     }
-
 }

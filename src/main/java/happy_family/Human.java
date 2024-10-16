@@ -66,6 +66,23 @@ public class Human {
         return String.format("%d years, %d months, and %d days old", age.getYears(), age.getMonths(), age.getDays());
     }
 
+    public int getAge() {
+        LocalDate birthDateLocal = LocalDate.ofEpochDay(this.birthDate / 86400000L);
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDateLocal, currentDate).getYears();
+    }
+
+
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{name='").append(name)
+                .append("', surname='").append(surname)
+                .append("', birthDate='").append(birthDate)
+                .append("', iq=").append(iq)
+                .append(", schedule=").append(schedule != null ? schedule.toString() : "null").append("}");
+        return sb.toString();
+    }
+
     public void greetPet() {
         System.out.println("Hello, " + pet.getNickname());
     }
