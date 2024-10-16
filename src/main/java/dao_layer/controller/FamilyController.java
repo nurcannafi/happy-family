@@ -7,6 +7,7 @@ import happy_family.Human;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class FamilyController {
@@ -77,13 +78,13 @@ public class FamilyController {
         if (families.isEmpty()) {
             System.out.println("The family list is empty.");
         } else {
-            families.forEach(family -> System.out.println(family));
+            families.forEach(System.out::println);
         }
     }
 
     private void displayFamiliesBiggerThan() {
         int size = getUserInput("Enter the minimum family size: ");
-        List<Family> families = familyService.getFamiliesBiggerThan(size);
+        List<Family> families = familyService.displayFamiliesBiggerThan(size);
         if (families.isEmpty()) {
             System.out.println("No families found.");
         } else {
@@ -93,7 +94,7 @@ public class FamilyController {
 
     private void displayFamiliesLessThan() {
         int size = getUserInput("Enter the maximum family size: ");
-        List<Family> families = familyService.getFamiliesLessThan(size);
+        List<Family> families = familyService.displayFamiliesLessThan(size);
         if (families.isEmpty()) {
             System.out.println("No families found.");
         } else {
@@ -102,10 +103,17 @@ public class FamilyController {
     }
 
     private void countFamiliesWithMembers() {
-        int number = getUserInput("Enter the number of family members: ");
-        long count = familyService.countFamiliesWithMemberNumber(number);
-        System.out.println("Number of families: " + count);
+        int familyIndex = getUserInput("Enter the family index: ");
+        Optional<Family> family = familyService.getFamilyByIndex(familyIndex);
+
+        if (family.isPresent()) {
+            int count = familyService.countFamilyMembers(family.get());
+            System.out.println("Number of family members: " + count);
+        } else {
+            System.out.println("Invalid family index.");
+        }
     }
+
 
     private void createNewFamily() {
         Human mother = getHumanDetails("mother");
@@ -117,6 +125,7 @@ public class FamilyController {
     private Human getHumanDetails(String role) {
         System.out.println("Enter details for the " + role + ":");
         System.out.print("Name: ");
+        scanner.nextLine();
         String name = scanner.nextLine();
         System.out.print("Last Name: ");
         String lastName = scanner.nextLine();
@@ -126,13 +135,13 @@ public class FamilyController {
 
     private void deleteFamilyByIndex() {
         int index = getUserInput("Enter the family index: ") - 1;
-        boolean deleted = familyService.deleteFamilyByIndex(index);
-        System.out.println(deleted ? "Family deleted." : "Invalid index. Family not deleted.");
+        familyService.deleteFamilyByIndex(index);
+        System.out.println("Family deleted if the index was valid.");
     }
 
     private void editFamilyByIndex() {
         int index = getUserInput("Enter the family index: ") - 1;
-        Family family = familyService.getFamilyById(index);
+        Family family = familyService.getFamilyByIndex(index).orElse(null);
         if (family == null) {
             System.out.println("Family not found.");
             return;
@@ -154,10 +163,11 @@ public class FamilyController {
             throw new FamilyOverFlowException("Reached the maximum number of family members!");
         }
         System.out.print("Son's name: ");
+        scanner.nextLine(); // Clear the buffer
         String maleName = scanner.nextLine();
         System.out.print("Daughter's name: ");
         String femaleName = scanner.nextLine();
-        family.bornChild(maleName, femaleName);
+        familyService.bornChild(family, maleName, femaleName);
         System.out.println("Child born.");
     }
 
@@ -166,16 +176,17 @@ public class FamilyController {
             throw new FamilyOverFlowException("Reached the maximum number of family members!");
         }
         System.out.print("Child's name: ");
+        scanner.nextLine();
         String childName = scanner.nextLine();
         long childBirthYear = getUserInput("Child's birth year: ");
         Human child = new Human(childName, "", childBirthYear);
-        family.adoptChild(child);
+        familyService.adoptChild(family, child);
         System.out.println("Child adopted.");
     }
 
     private void deleteAllChildrenOlderThan() {
         int age = getUserInput("Enter the age limit: ");
-        familyService.deleteAllChildrenOlderThan(age);
+        familyService.deleteChildrenOlderThan(age);
         System.out.println("All children older than the specified age have been removed.");
     }
 }
