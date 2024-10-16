@@ -1,5 +1,6 @@
 package dao_layer.controller;
 
+import dao_layer.exception.FamilyOverFlowException;
 import dao_layer.service.FamilyService;
 import happy_family.Family;
 import happy_family.Human;
@@ -148,6 +149,9 @@ public class FamilyController {
     }
 
     private void handleChildBirth(Family family) {
+        if (family.countFamily() > 4) {
+            throw new FamilyOverFlowException("Reached the maximum number of family members!");
+        }
         System.out.print("Son's name: ");
         String maleName = scanner.nextLine();
         System.out.print("Daughter's name: ");
@@ -157,6 +161,9 @@ public class FamilyController {
     }
 
     private void handleChildAdoption(Family family) {
+        if (family.countFamily() > 4) {
+            throw new FamilyOverFlowException("Reached the maximum number of family members!");
+        }
         System.out.print("Child's name: ");
         String childName = scanner.nextLine();
         long childBirthYear = getUserInput("Child's birth year: ");
