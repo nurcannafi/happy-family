@@ -53,6 +53,16 @@ public abstract class Pet {
         return (trickLevel != null) ? trickLevel : 0;
     }
 
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{species=").append(species)
+                .append(", nickname='").append(nickname)
+                .append("', age=").append(age)
+                .append(", trickLevel=").append(trickLevel)
+                .append(", habits=").append(habits).append("}");
+        return sb.toString();
+    }
+
 
     public void setTrickLevel(Integer trickLevel) {
         if (trickLevel == null) this.trickLevel = null;
