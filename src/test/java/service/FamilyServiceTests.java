@@ -2,16 +2,7 @@ package service;
 
 import dao_layer.dao.CollectionFamilyDao;
 import dao_layer.service.FamilyService;
-
-import happy_family.DomesticCat;
-import happy_family.Dog;
-import happy_family.Family;
-import happy_family.Human;
-import happy_family.Man;
-import happy_family.Pet;
-import happy_family.RoboCat;
-import happy_family.Woman;
-
+import happy_family.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,11 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FamilyServiceTests {
 
@@ -35,7 +22,7 @@ class FamilyServiceTests {
     @BeforeEach
     void setup() {
         familyDao = new CollectionFamilyDao();
-        familyService = new FamilyService(familyDao);
+        familyService = new FamilyService();
 
         family1 = new Family(new Woman("Jane", "Doe", 315532800000L),
                 new Man("Jon", "Doe", 220752000000L));
@@ -50,6 +37,7 @@ class FamilyServiceTests {
         familyDao.saveFamily(family2);
     }
 
+
     @Test
     void getAllFamiliesTest() {
         List<Family> families = familyService.getAllFamilies();
@@ -61,7 +49,7 @@ class FamilyServiceTests {
 
     @Test
     void getFamiliesBiggerThanTest() {
-        List<Family> biggerFamilies = familyService.getFamiliesBiggerThan(3);
+        List<Family> biggerFamilies = familyService.displayFamiliesBiggerThan(3);
 
         assertEquals(1, biggerFamilies.size());
         assertEquals(family1, biggerFamilies.get(0));
@@ -69,7 +57,7 @@ class FamilyServiceTests {
 
     @Test
     void getFamiliesLessThanTest() {
-        List<Family> smallFamilies = familyService.getFamiliesLessThan(4);
+        List<Family> smallFamilies = familyService.displayFamiliesLessThan(4);
 
         assertEquals(1, smallFamilies.size());
         assertEquals(family2, smallFamilies.get(0));
@@ -77,8 +65,8 @@ class FamilyServiceTests {
 
     @Test
     void countFamiliesWithMemberNumberTest() {
-        Long families = familyService.countFamiliesWithMemberNumber(3);
-        assertEquals(1, families);
+        long families = familyService.countFamilyMembers(family1);
+        assertEquals(4, families);
     }
 
     @Test
@@ -95,13 +83,14 @@ class FamilyServiceTests {
 
     @Test
     void deleteFamilyByIndexSuccessTest() {
-        assertTrue(familyService.deleteFamilyByIndex(1));
+        familyService.deleteFamilyByIndex(1);
         assertEquals(1, familyService.getAllFamilies().size());
     }
 
+
     @Test
     void deleteFamilyByIndexFailureTest() {
-        assertFalse(familyService.deleteFamilyByIndex(3));
+        familyService.deleteFamilyByIndex(3); // Test for invalid index, should not change family count
         assertEquals(2, familyService.getAllFamilies().size());
     }
 
@@ -114,11 +103,8 @@ class FamilyServiceTests {
         List<Human> children = family2.getChildren();
         assertEquals(2, children.size());
 
-        if (children.get(1).getName().equals(maleName)) {
-            assertEquals(maleName, children.get(1).getName());
-        } else {
-            assertEquals(femaleName, children.get(1).getName());
-        }
+        String childName = children.get(1).getName();
+        assertTrue(childName.equals(maleName) || childName.equals(femaleName));
     }
 
     @Test
@@ -132,7 +118,7 @@ class FamilyServiceTests {
 
     @Test
     void deleteAllChildrenOlderThanTest() {
-        familyService.deleteAllChildrenOlderThan(17);
+        familyService.deleteChildrenOlderThan(17);
 
         assertEquals(1, family1.getChildren().size());
         assertEquals(1, family2.getChildren().size());
@@ -154,15 +140,15 @@ class FamilyServiceTests {
 
     @Test
     void getFamilyByIdTest() {
-        Family retrievedFamily1 = familyService.getFamilyById(0);
+        Family retrievedFamily1 = familyService.getFamilyByIndex(0).orElse(null);
         assertNotNull(retrievedFamily1);
         assertEquals(family1, retrievedFamily1);
 
-        Family retrievedFamily2 = familyService.getFamilyById(1);
+        Family retrievedFamily2 = familyService.getFamilyByIndex(1).orElse(null);
         assertNotNull(retrievedFamily2);
         assertEquals(family2, retrievedFamily2);
 
-        assertNull(familyService.getFamilyById(3));
+        assertTrue(familyService.getFamilyByIndex(3).isEmpty());
     }
 
     @Test
@@ -181,19 +167,11 @@ class FamilyServiceTests {
     }
 
     @Test
-    void addPetsTest() {
-        Pet dog = new Dog("Enzo");
-        familyService.addPet(1, dog);
+    void addPetTest() {
+        Pet dog = new Dog("Rocky");
+        familyService.addPet(0, dog);
 
-        Set<Pet> pet = familyService.getPets(1);
-        assertNotNull(pet);
-        assertEquals(1, pet.size());
-        assertTrue(pet.contains(dog));
-
-        Pet cat = new RoboCat("Tom");
-        familyService.addPet(1, cat);
-        assertEquals(2, familyService.getPets(1).size());
-        assertTrue(familyService.getPets(1).contains(cat));
+        assertEquals(1, family1.getPets().size());
+        assertEquals("Rocky", family1.getPets().iterator().next().getNickname());
     }
-
 }

@@ -36,6 +36,10 @@ public class Family {
         this.pets = new HashSet<>();
     }
 
+    public Family() {
+
+    }
+
     public Human getMother() {
         return mother;
     }

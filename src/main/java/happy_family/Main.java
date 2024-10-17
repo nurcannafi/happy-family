@@ -1,7 +1,6 @@
 package happy_family;
 
 import dao_layer.controller.FamilyController;
-import dao_layer.dao.CollectionFamilyDao;
 import dao_layer.service.FamilyService;
 
 public class Main {
@@ -59,8 +58,9 @@ public class Main {
 //                e.printStackTrace();
 //            }
 //        }
-        FamilyController controller = new FamilyController(new FamilyService(new CollectionFamilyDao()));
-        controller.start();
+        FamilyService familyService = new FamilyService();
+        familyService.fillWithTestData();
+        FamilyController familyController = new FamilyController(familyService);
+        familyController.start();
     }
-
 }
