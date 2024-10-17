@@ -2,12 +2,13 @@ package dao_layer.dao;
 
 import happy_family.Family;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
 
-    private final List<Family> families;
+    private List<Family> families;
 
     public CollectionFamilyDao() {
         families = new ArrayList<>();
@@ -51,5 +52,20 @@ public class CollectionFamilyDao implements FamilyDao {
         }
         return family;
 
+    }
+
+    @Override
+    public void saveDataToFile(String filePath) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(families);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void loadDataFromFile(String filePath) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            families = (List<Family>) ois.readObject();
+        }
     }
 }

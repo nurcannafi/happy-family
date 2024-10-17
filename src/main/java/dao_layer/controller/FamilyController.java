@@ -104,14 +104,13 @@ public class FamilyController {
 
     private void countFamiliesWithMembers() {
         int familyIndex = getUserInput("Enter the family index: ");
-        Optional<Family> family = familyService.getFamilyByIndex(familyIndex);
-
-        if (family.isPresent()) {
-            int count = familyService.countFamilyMembers(family.get());
-            System.out.println("Number of family members: " + count);
-        } else {
-            System.out.println("Invalid family index.");
-        }
+        familyService.getFamilyByIndex(familyIndex)
+                .ifPresentOrElse(
+                        family -> {
+                            int count = familyService.countFamilyMembers(family);
+                            System.out.println("Number of family members: " + count);
+                        },
+                        () -> System.out.println("Invalid family index."));
     }
 
 
