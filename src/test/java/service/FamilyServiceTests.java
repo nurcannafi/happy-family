@@ -2,7 +2,15 @@ package service;
 
 import dao_layer.dao.CollectionFamilyDao;
 import dao_layer.service.FamilyService;
-import happy_family.*;
+
+import happy_family.DomesticCat;
+import happy_family.Dog;
+import happy_family.Family;
+import happy_family.Human;
+import happy_family.Man;
+import happy_family.Pet;
+import happy_family.Woman;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +18,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FamilyServiceTests {
 
@@ -22,7 +32,7 @@ class FamilyServiceTests {
     @BeforeEach
     void setup() {
         familyDao = new CollectionFamilyDao();
-        familyService = new FamilyService();
+        familyService = new FamilyService(familyDao);
 
         family1 = new Family(new Woman("Jane", "Doe", 315532800000L),
                 new Man("Jon", "Doe", 220752000000L));
@@ -90,7 +100,7 @@ class FamilyServiceTests {
 
     @Test
     void deleteFamilyByIndexFailureTest() {
-        familyService.deleteFamilyByIndex(3); // Test for invalid index, should not change family count
+        familyService.deleteFamilyByIndex(3);
         assertEquals(2, familyService.getAllFamilies().size());
     }
 
