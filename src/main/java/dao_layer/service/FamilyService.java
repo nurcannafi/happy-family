@@ -5,6 +5,7 @@ import happy_family.Family;
 import happy_family.Human;
 import happy_family.Pet;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -160,6 +161,24 @@ public class FamilyService {
         if (family != null) {
             family.getPets().add(pet);
             familyDao.saveFamily(family);
+        }
+    }
+    public void saveDataToFile(String filePath) {
+        try {
+            familyDao.saveDataToFile(filePath);
+            System.out.println("Data saved successfully.");
+        } catch (IOException e) {
+            System.out.println("Failed to save data: " + e.getMessage());
+        }
+    }
+
+
+    public void loadDataFromFile(String filePath) {
+        try {
+            familyDao.loadDataFromFile(filePath);
+            System.out.println("Data loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Failed to load data: " + e.getMessage());
         }
     }
 }

@@ -2,6 +2,7 @@ package dao_layer.dao;
 
 import happy_family.Family;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface FamilyDao {
@@ -15,4 +16,8 @@ public interface FamilyDao {
     Boolean deleteFamily(Family family);
 
     Family saveFamily(Family family);
+
+    void saveDataToFile(String filePath) throws IOException;
+
+    void loadDataFromFile(String filePath) throws IOException, ClassNotFoundException;
 }
