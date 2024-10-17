@@ -1,7 +1,10 @@
 package happy_family;
 
 import dao_layer.controller.FamilyController;
+import dao_layer.dao.CollectionFamilyDao;
 import dao_layer.service.FamilyService;
+
+import java.util.Scanner;
 
 public class Main {
 
@@ -58,9 +61,44 @@ public class Main {
 //                e.printStackTrace();
 //            }
 //        }
-        FamilyService familyService = new FamilyService();
+        CollectionFamilyDao familyDao = new CollectionFamilyDao();
+        FamilyService familyService = new FamilyService(familyDao);
         familyService.fillWithTestData();
         FamilyController familyController = new FamilyController(familyService);
         familyController.start();
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Display all families");
+            System.out.println("2. Save data to file");
+            System.out.println("3. Load data from file");
+            System.out.println("4. Exit");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            String saveFilePath = "C:/data/families_data_save.txt";
+            String loadFilePath = "C:/data/families_data_load.txt";
+
+            switch (choice) {
+                case 1:
+                    familyService.getAllFamilies().forEach(System.out::println);
+                    break;
+                case 2:
+                    System.out.println("Saving data to: " + saveFilePath);
+                    familyService.saveDataToFile(saveFilePath);
+                    break;
+                case 3:
+                    System.out.println("Loading data from: " + loadFilePath);
+                    familyService.loadDataFromFile(loadFilePath);
+                    break;
+                case 4:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
 }
