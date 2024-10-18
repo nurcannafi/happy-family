@@ -67,19 +67,20 @@ public class Main {
         FamilyController familyController = new FamilyController(familyService);
         familyController.start();
 
-        Scanner scanner = new Scanner(System.in);
+
+        String saveFilePath = "C:/data/families_data_save.txt";
+        String loadFilePath = "C:/data/families_data_load.txt";
+
         while (true) {
-            System.out.println("\nMenu:");
-            System.out.println("1. Display all families");
+            System.out.println("1. View all families");
             System.out.println("2. Save data to file");
             System.out.println("3. Load data from file");
             System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
 
+            Scanner scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
             scanner.nextLine();
-
-            String saveFilePath = "C:/data/families_data_save.txt";
-            String loadFilePath = "C:/data/families_data_load.txt";
 
             switch (choice) {
                 case 1:
@@ -94,6 +95,7 @@ public class Main {
                     familyService.loadDataFromFile(loadFilePath);
                     break;
                 case 4:
+                    System.out.println("Exiting...");
                     System.exit(0);
                     break;
                 default:
