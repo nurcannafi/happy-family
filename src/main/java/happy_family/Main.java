@@ -68,8 +68,7 @@ public class Main {
         familyController.start();
 
 
-        String saveFilePath = "C:/data/families_data.txt";
-        String loadFilePath = "C:/data/families_data.txt";
+        String filePath = "C:/data/families_data.txt";
 
         while (true) {
             System.out.println("1. View all families");
@@ -87,12 +86,12 @@ public class Main {
                     familyService.getAllFamilies().forEach(System.out::println);
                     break;
                 case 2:
-                    System.out.println("Saving data to: " + saveFilePath);
-                    familyService.saveDataToFile(saveFilePath);
+                    System.out.println("Saving data to: " + filePath);
+                    familyService.saveDataToFile(filePath);
                     break;
                 case 3:
-                    System.out.println("Loading data from: " + loadFilePath);
-                    familyService.loadDataFromFile(loadFilePath);
+                    System.out.println("Loading data from: " + filePath);
+                    familyService.loadDataFromFile(filePath);
                     break;
                 case 4:
                     System.out.println("Exiting...");
