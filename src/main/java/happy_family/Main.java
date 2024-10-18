@@ -4,6 +4,8 @@ import dao_layer.controller.FamilyController;
 import dao_layer.dao.CollectionFamilyDao;
 import dao_layer.service.FamilyService;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -64,5 +66,40 @@ public class Main {
         familyService.fillWithTestData();
         FamilyController familyController = new FamilyController(familyService);
         familyController.start();
+
+
+        String filePath = "C:/data/families_data.txt";
+
+        while (true) {
+            System.out.println("1. View all families");
+            System.out.println("2. Save data to file");
+            System.out.println("3. Load data from file");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            Scanner scanner = new Scanner(System.in);
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    familyService.getAllFamilies().forEach(System.out::println);
+                    break;
+                case 2:
+                    System.out.println("Saving data to: " + filePath);
+                    familyService.saveDataToFile(filePath);
+                    break;
+                case 3:
+                    System.out.println("Loading data from: " + filePath);
+                    familyService.loadDataFromFile(filePath);
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
 }
