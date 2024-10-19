@@ -6,9 +6,9 @@ import service.FamilyService;
 
 import java.util.Scanner;
 
-public class Main {
+public class HappyFamilyApp {
 
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logger = LoggerFactory.getLogger(HappyFamilyApp.class);
 
     public static void main(String[] args) {
 //        int startCount = 10_000;
@@ -69,7 +69,6 @@ public class Main {
         FamilyController familyController = new FamilyController(familyService);
         familyController.start();
 
-        // Customizable file path from program arguments or default to a specific path
         String filePath = args.length > 0 ? args[0] : "C:/data/families_data.txt";
 
         Scanner scanner = new Scanner(System.in);
@@ -83,7 +82,7 @@ public class Main {
             logger.info("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:

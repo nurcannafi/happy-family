@@ -21,7 +21,8 @@ public class Woman extends Human {
         super(name, surname, dateOfBirthYear, family);
     }
 
-    public Woman(String name, String surname, Long dateOfBirthYear, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
+    public Woman(String name, String surname, Long dateOfBirthYear, Integer iq, Pet pet, Family family,
+                 Map<DayOfWeek, String> schedule) {
         super(name, surname, dateOfBirthYear, iq, pet, family, schedule);
     }
 

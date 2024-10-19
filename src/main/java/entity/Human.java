@@ -31,7 +31,7 @@ public class Human implements Serializable {
     public Human(String name, String surname, Long birthDate, Family family) {
         this.name = name;
         this.surname = surname;
-        this.birthDate = birthDate;
+        this.birthDate=birthDate;
         this.family = family;
         this.schedule = new EnumMap<>(DayOfWeek.class);
     }
@@ -42,14 +42,14 @@ public class Human implements Serializable {
     public Human(String name, String surname, Long birthDate) {
         this.name = name;
         this.surname = surname;
-        this.birthDate = birthDate;
+        this.birthDate=birthDate;
         this.schedule = new EnumMap<>(DayOfWeek.class);
     }
 
     public Human(String name, String surname, Long birthDate, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
         this.name = name;
         this.surname = surname;
-        this.birthDate = birthDate;
+        this.birthDate=birthDate;
         setIq(iq);
         this.pet = pet;
         this.family = family;
@@ -217,6 +217,7 @@ public class Human implements Serializable {
     @Override
     protected void finalize() throws Throwable {
         logger.info("Human object is being removed: {} {}", this.getName(), this.getSurname());
+        super.finalize();
     }
 
     @Override
