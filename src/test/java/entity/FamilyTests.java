@@ -1,9 +1,5 @@
-package happy_family;
+package entity;
 
-import entity.Dog;
-import entity.Family;
-import entity.Human;
-import entity.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

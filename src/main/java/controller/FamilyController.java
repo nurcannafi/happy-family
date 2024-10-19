@@ -66,7 +66,7 @@ public class FamilyController {
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
                 logger.warn("Invalid input! Please enter a number.");
-                scanner.nextLine(); // Clear the invalid input
+                scanner.nextLine();
             }
         }
     }
@@ -128,7 +128,7 @@ public class FamilyController {
     private Human getHumanDetails(String role) {
         logger.info("Enter details for the {}:", role);
         logger.info("Name: ");
-        scanner.nextLine(); // Clear the buffer
+        scanner.nextLine();
         String name = scanner.nextLine();
         logger.info("Last Name: ");
         String lastName = scanner.nextLine();

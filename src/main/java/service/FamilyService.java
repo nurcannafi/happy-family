@@ -42,6 +42,7 @@ public class FamilyService {
         families[1].addChild(new Human("Charlie", NAME_JOHNSON, 1420070400000L));
         families[2].addChild(new Human("Mia", NAME_WILLIAMS, 1514764800000L));
 
+
         for (Family family : families) {
             familyDao.saveFamily(family);
         }
