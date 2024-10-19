@@ -1,9 +1,11 @@
-package dao_layer.service;
+package service;
 
-import dao_layer.dao.CollectionFamilyDao;
-import happy_family.Family;
-import happy_family.Human;
-import happy_family.Pet;
+import dao.impl.CollectionFamilyDao;
+import entity.Human;
+import entity.Pet;
+import entity.Family;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -13,7 +15,13 @@ import java.util.Set;
 
 public class FamilyService {
 
+    private static final Logger logger = LoggerFactory.getLogger(FamilyService.class);
+
     private final CollectionFamilyDao familyDao;
+
+    private static final String NAME_SMITH = "Smith";
+    private static final String NAME_WILLIAMS = "Williams";
+    private static final String NAME_JOHNSON = "Johnson";
 
     public FamilyService(CollectionFamilyDao familyDao) {
         this.familyDao = familyDao;
@@ -21,24 +29,24 @@ public class FamilyService {
 
     public void fillWithTestData() {
         Family[] families = {
-                new Family(new Human("Emma", "Smith", 315619200000L),
-                        new Human("John", "Smith", 315532800000L)),
-                new Family(new Human("Olivia", "Johnson", 576480000000L),
-                        new Human("James", "Johnson", 315619200000L)),
-                new Family(new Human("Sophia", "Williams", 631152000000L),
-                        new Human("Liam", "Williams", 576480000000L))
+                new Family(new Human("Emma", NAME_SMITH, 315619200000L),
+                        new Human("John", NAME_SMITH, 315532800000L)),
+                new Family(new Human("Olivia", NAME_JOHNSON, 576480000000L),
+                        new Human("James", NAME_JOHNSON, 315619200000L)),
+                new Family(new Human("Sophia", NAME_WILLIAMS, 631152000000L),
+                        new Human("Liam", NAME_WILLIAMS, 576480000000L))
         };
 
-        families[0].addChild(new Human("Alice", "Smith", 1262304000000L));
-        families[0].addChild(new Human("Bob", "Smith", 1325376000000L));
-        families[1].addChild(new Human("Charlie", "Johnson", 1420070400000L));
-        families[2].addChild(new Human("Mia", "Williams", 1514764800000L));
+        families[0].addChild(new Human("Alice", NAME_SMITH, 1262304000000L));
+        families[0].addChild(new Human("Bob", NAME_SMITH, 1325376000000L));
+        families[1].addChild(new Human("Charlie", NAME_JOHNSON, 1420070400000L));
+        families[2].addChild(new Human("Mia", NAME_WILLIAMS, 1514764800000L));
 
         for (Family family : families) {
             familyDao.saveFamily(family);
         }
 
-        System.out.println("Test data has been added.");
+        logger.info("Test data has been added.");
     }
 
     public Family createNewFamily(Human mother, Human father) {
@@ -52,7 +60,7 @@ public class FamilyService {
         if (index >= 0 && index < families.size()) {
             familyDao.deleteFamily(index);
         } else {
-            System.out.println("Invalid index.");
+            logger.warn("Invalid index.");
         }
     }
 
@@ -67,7 +75,7 @@ public class FamilyService {
             family.addChild(child);
             familyDao.saveFamily(family);
         } else {
-            System.out.println("Invalid family index.");
+            logger.warn("Invalid family index.");
         }
     }
 
@@ -84,7 +92,7 @@ public class FamilyService {
         if (index >= 0 && index < families.size()) {
             return Optional.of(families.get(index));
         } else {
-            System.out.println("Invalid index.");
+            logger.warn("Invalid index.");
             return Optional.empty();
         }
     }
@@ -104,14 +112,12 @@ public class FamilyService {
     public List<Family> displayFamiliesBiggerThan(int count) {
         return familyDao.getAllFamilies().stream()
                 .filter(family -> countFamilyMembers(family) > count)
-                .peek(System.out::println)
                 .toList();
     }
 
     public List<Family> displayFamiliesLessThan(int count) {
         return familyDao.getAllFamilies().stream()
                 .filter(family -> countFamilyMembers(family) < count)
-                .peek(System.out::println)
                 .toList();
     }
 
@@ -143,21 +149,23 @@ public class FamilyService {
             familyDao.saveFamily(family);
         });
     }
+
     public void saveDataToFile(String filePath) {
         try {
             familyDao.saveDataToFile(filePath);
-            System.out.println("Data saved successfully.");
+            logger.info("Data saved successfully.");
         } catch (IOException e) {
-            System.out.println("Failed to save data: " + e.getMessage());
+            logger.error("Failed to save data: {}", e.getMessage());
         }
     }
 
     public void loadDataFromFile(String filePath) {
         try {
             familyDao.loadDataFromFile(filePath);
-            System.out.println("Data loaded successfully.");
+            logger.info("Data loaded successfully.");
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Failed to load data: " + e.getMessage());
+            logger.error("Failed to load data: {}", e.getMessage());
         }
     }
+
 }

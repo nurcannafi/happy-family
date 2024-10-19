@@ -1,4 +1,7 @@
-package happy_family;
+package entity;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,35 +13,25 @@ import java.util.Objects;
 
 public class Family implements Serializable {
 
+    private static final Logger logger = LoggerFactory.getLogger(Family.class);
+
     private Human mother;
     private Human father;
     private List<Human> children;
     private Set<Pet> pets;
-
-    static {
-        System.out.println(Family.class.getSimpleName() + " class loaded.");
-    }
-
-    {
-        System.out.println(this.getClass().getSimpleName() + " object created.");
-    }
 
     public Family(Human mother, Human father) {
         this.mother = mother;
         this.father = father;
         this.children = new ArrayList<>();
         this.pets = new HashSet<>();
-    }
-
-    public Family(String motherName, String motherLastName, int motherBirthYear, int motherBirthMonth, int motherBirthday, int motherIQ, String fatherName, String fatherLastName, int fatherBirthYear, int fatherBirthMonth, int fatherBirthday, int fatherIQ) {
-        this.mother = new Human();
-        this.father = new Human();
-        this.children = new ArrayList<>();
-        this.pets = new HashSet<>();
+        logger.info("Family object created with mother: {}, father: {}", mother, father);
     }
 
     public Family() {
-
+        this.children = new ArrayList<>();
+        this.pets = new HashSet<>();
+        logger.info("Empty Family object created.");
     }
 
     public Human getMother() {
@@ -150,12 +143,15 @@ public class Family implements Serializable {
     }
 
     @Override
+    @SuppressWarnings({"deprecation", "removal"})
     protected void finalize() throws Throwable {
-        System.out.println("Family object is being removed: " + this);
+        logger.info("Family object is being removed: {}", this);
+        super.finalize();
     }
 
     @Override
     public String toString() {
         return String.format("Family{Mother=%s, Father=%s, Children=%s, Pets=%s}", mother, father, children, pets);
     }
+
 }

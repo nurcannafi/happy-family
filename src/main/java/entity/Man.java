@@ -1,8 +1,14 @@
-package happy_family;
+package entity;
+
+import model.DayOfWeek;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class Man extends Human {
+
+    private static final Logger logger = LoggerFactory.getLogger(Man.class);
 
     public Man() {
         super("Default Name", "Default Surname", 0L);
@@ -21,11 +27,12 @@ public class Man extends Human {
     }
 
     public void repairCar() {
-        System.out.println("I am going to repair my car. Wanna help me out?");
+        logger.info("I am going to repair my car. Wanna help me out?");
     }
 
     @Override
     public void greetPet() {
-        System.out.println(getName() + " greets pet");
+        logger.info("{} greets pet", getName());
     }
+
 }

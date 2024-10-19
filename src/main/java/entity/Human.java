@@ -1,15 +1,24 @@
-package happy_family;
+package entity;
+
+import model.DayOfWeek;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Human implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(Human.class);
+    private static final Random random = new Random();
 
     private String name;
     private String surname;
@@ -24,7 +33,7 @@ public class Human implements Serializable {
         this.surname = surname;
         this.birthDate = birthDate;
         this.family = family;
-        this.schedule = new HashMap<>();
+        this.schedule = new EnumMap<>(DayOfWeek.class);
     }
 
     public Human() {
@@ -34,7 +43,7 @@ public class Human implements Serializable {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
-        this.schedule = new HashMap<>();
+        this.schedule = new EnumMap<>(DayOfWeek.class);
     }
 
     public Human(String name, String surname, Long birthDate, Integer iq, Pet pet, Family family, Map<DayOfWeek, String> schedule) {
@@ -44,17 +53,17 @@ public class Human implements Serializable {
         setIq(iq);
         this.pet = pet;
         this.family = family;
-        this.schedule = (schedule != null) ? schedule : new HashMap<>();
+        this.schedule = (schedule != null) ? new EnumMap<>(schedule) : new EnumMap<>(DayOfWeek.class);
     }
 
-    public Human(String name, String surname, String birthDateString, Integer iq) {
+    public Human(String name, String surname, String birthDate, Integer iq) {
         this.name = name;
         this.surname = surname;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate birthDateLocal = LocalDate.parse(birthDateString, formatter);
+        LocalDate birthDateLocal = LocalDate.parse(birthDate, formatter);
         this.birthDate = birthDateLocal.toEpochDay() * 86400000L;
         setIq(iq);
-        this.schedule = new HashMap<>();
+        this.schedule = new EnumMap<>(DayOfWeek.class);
     }
 
     public String describeAge() {
@@ -73,51 +82,56 @@ public class Human implements Serializable {
         return Period.between(birthDateLocal, currentDate).getYears();
     }
 
-
     public String prettyFormat() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{name='").append(name)
-                .append("', surname='").append(surname)
-                .append("', birthDate='").append(birthDate)
-                .append("', iq=").append(iq)
-                .append(", schedule=").append(schedule != null ? schedule.toString() : "null").append("}");
+        sb.append(String.format("{name='%s', surname='%s', birthDate='%d', iq=%d, schedule=%s}",
+                name, surname, birthDate, iq, schedule != null ? schedule.toString() : "null"));
         return sb.toString();
     }
 
     public void greetPet() {
-        System.out.println("Hello, " + pet.getNickname());
+        logger.info("Hello, {}", pet.getNickname());
     }
 
     public void addToSchedule(DayOfWeek day, String activity) {
         if (schedule.containsKey(day)) {
-            System.out.println("This day already has an activity: " + schedule.get(day));
+            if (logger.isInfoEnabled()) {
+                String existingActivity = schedule.get(day);
+                logger.info("This day already has an activity: {}", existingActivity);
+            }
             return;
         }
         schedule.put(day, activity);
+        if (logger.isInfoEnabled()) {
+            logger.info("Added activity for {}: {}", day, activity);
+        }
     }
 
     public void describePet() {
         if (pet != null) {
-            if (pet.getTrickLevel() > 50) {
-                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is very sly.");
-            } else {
-                System.out.println("I have a " + pet.getSpecies() + " that is " + pet.getAge() + " years old; he is almost not sly.");
+            if (logger.isInfoEnabled()) {
+                String message = (pet.getTrickLevel() > 50)
+                        ? "I have a %s that is %d years old; he is very sly."
+                        : "I have a %s that is %d years old; he is almost not sly.";
+                logger.info(String.format(message, pet.getSpecies(), pet.getAge()));
             }
         } else {
-            System.out.println("I don't have a pet.");
+            if (logger.isInfoEnabled()) {
+                logger.info("I don't have a pet.");
+            }
         }
     }
 
     public void feedPet(boolean isHungry) {
         if (!isHungry) {
-            int pseudorandomNumber = (int) (Math.random() * 101);
+            int pseudorandomNumber = random.nextInt(101);
             if (pseudorandomNumber > pet.getTrickLevel()) {
-                System.out.println("Hm... I will feed " + pet.getNickname());
+                logger.info("Hm... I will feed {}", pet.getNickname());
             } else {
-                System.out.println("I think " + pet.getNickname() + " is not hungry.");
+                logger.info("I think {} is not hungry.", pet.getNickname());
             }
         } else {
-            System.out.println("Hm... I will feed " + pet.getNickname());
+            logger.info("Hm... I will feed {}", pet.getNickname());
         }
     }
 
@@ -126,7 +140,7 @@ public class Human implements Serializable {
     }
 
     public void setSchedule(Map<DayOfWeek, String> schedule) {
-        this.schedule = (schedule != null) ? schedule : new HashMap<>();
+        this.schedule = (schedule != null) ? new EnumMap<>(schedule) : new EnumMap<>(DayOfWeek.class);
     }
 
     public String getName() {
@@ -200,10 +214,9 @@ public class Human implements Serializable {
     }
 
     @SuppressWarnings({"deprecation", "removal"})
-
     @Override
     protected void finalize() throws Throwable {
-        System.out.println("Human object is being removed: " + this.getName() + " " + this.getSurname());
+        logger.info("Human object is being removed: {} {}", this.getName(), this.getSurname());
     }
 
     @Override

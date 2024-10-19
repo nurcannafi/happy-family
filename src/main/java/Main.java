@@ -1,12 +1,14 @@
-package happy_family;
-
-import dao_layer.controller.FamilyController;
-import dao_layer.dao.CollectionFamilyDao;
-import dao_layer.service.FamilyService;
+import controller.FamilyController;
+import dao.impl.CollectionFamilyDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import service.FamilyService;
 
 import java.util.Scanner;
 
 public class Main {
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
 //        int startCount = 10_000;
@@ -67,39 +69,51 @@ public class Main {
         FamilyController familyController = new FamilyController(familyService);
         familyController.start();
 
+        // Customizable file path from program arguments or default to a specific path
+        String filePath = args.length > 0 ? args[0] : "C:/data/families_data.txt";
 
-        String filePath = "C:/data/families_data.txt";
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
 
-        while (true) {
-            System.out.println("1. View all families");
-            System.out.println("2. Save data to file");
-            System.out.println("3. Load data from file");
-            System.out.println("4. Exit");
-            System.out.print("Enter your choice: ");
+        while (running) {
+            logger.info("1. View all families");
+            logger.info("2. Save data to file");
+            logger.info("3. Load data from file");
+            logger.info("4. Exit");
+            logger.info("Enter your choice: ");
 
-            Scanner scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consume the newline character
 
             switch (choice) {
                 case 1:
-                    familyService.getAllFamilies().forEach(System.out::println);
+                    familyService.getAllFamilies().forEach(family -> logger.info(family.toString()));
                     break;
                 case 2:
-                    System.out.println("Saving data to: " + filePath);
+                    logger.info("Saving data to: {}", filePath);
                     familyService.saveDataToFile(filePath);
                     break;
                 case 3:
-                    System.out.println("Loading data from: " + filePath);
+                    logger.info("Loading data from: {}", filePath);
                     familyService.loadDataFromFile(filePath);
                     break;
                 case 4:
-                    System.out.println("Exiting...");
-                    System.exit(0);
+                    logger.info("Exiting...");
+                    running = false;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.warn("Invalid choice. Please try again.");
+            }
+
+            if (running) {
+                logger.info("Do you want to continue? (yes/no): ");
+                String continueChoice = scanner.nextLine().trim().toLowerCase();
+                if (continueChoice.equals("no") || continueChoice.equals("n")) {
+                    running = false;
+                    logger.info("Exiting...");
+                }
             }
         }
     }
+
 }

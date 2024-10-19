@@ -1,8 +1,14 @@
-package happy_family;
+package entity;
+
+import model.Species;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
 public class DomesticCat extends Pet {
+
+    private static final Logger logger = LoggerFactory.getLogger(DomesticCat.class);
 
     public DomesticCat(String nickname) {
         super(nickname);
@@ -16,11 +22,11 @@ public class DomesticCat extends Pet {
 
     @Override
     public void respond() {
-        System.out.println("Meow! I am " + getNickname() + ". I miss you!");
+        logger.info("Meow! I am {}. I miss you!", getNickname());
     }
 
     public void foul() {
-        System.out.println("I need to cover my mess.");
+        logger.info("I need to cover my mess.");
     }
 
 }

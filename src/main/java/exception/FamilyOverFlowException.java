@@ -1,4 +1,4 @@
-package dao_layer.exception;
+package exception;
 
 public class FamilyOverFlowException extends RuntimeException {
 

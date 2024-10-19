@@ -1,11 +1,10 @@
-package dao_layer.dao;
+package dao;
 
-import happy_family.Family;
+import entity.Family;
 
 import java.io.IOException;
 
 import java.util.List;
-
 
 
 public interface FamilyDao {

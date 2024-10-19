@@ -1,8 +1,14 @@
-package happy_family;
+package entity;
+
+import model.DayOfWeek;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class Woman extends Human {
+
+    private static final Logger logger = LoggerFactory.getLogger(Woman.class);
 
     public Woman() {
     }
@@ -20,12 +26,12 @@ public class Woman extends Human {
     }
 
     public void makeUp() {
-        System.out.println("Woman does make up");
+        logger.info("Woman does make up");
     }
 
     @Override
     public void greetPet() {
-        System.out.println(getName() + " greets pet");
+        logger.info("{} greets pet", getName());
     }
 
 }

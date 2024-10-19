@@ -1,15 +1,14 @@
 package service;
 
-import dao_layer.dao.CollectionFamilyDao;
-import dao_layer.service.FamilyService;
+import dao.impl.CollectionFamilyDao;
 
-import happy_family.DomesticCat;
-import happy_family.Dog;
-import happy_family.Family;
-import happy_family.Human;
-import happy_family.Man;
-import happy_family.Pet;
-import happy_family.Woman;
+import entity.DomesticCat;
+import entity.Dog;
+import entity.Family;
+import entity.Human;
+import entity.Man;
+import entity.Pet;
+import entity.Woman;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

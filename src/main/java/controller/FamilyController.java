@@ -1,19 +1,22 @@
-package dao_layer.controller;
+package controller;
 
-import dao_layer.exception.FamilyOverFlowException;
-import dao_layer.service.FamilyService;
-import happy_family.Family;
-import happy_family.Human;
+import exception.FamilyOverFlowException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import service.FamilyService;
+import entity.Family;
+import entity.Human;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class FamilyController {
 
+    private static final Logger logger = LoggerFactory.getLogger(FamilyController.class);
     private final FamilyService familyService;
     private final Scanner scanner;
+    private static final String ENTER_FAMILY_INDEX_MESSAGE = "Enter the family index: ";
 
     public FamilyController(FamilyService familyService) {
         this.familyService = familyService;
@@ -37,58 +40,60 @@ public class FamilyController {
                 case 8 -> editFamilyByIndex();
                 case 9 -> deleteAllChildrenOlderThan();
                 case 10 -> running = false;
-                default -> System.out.println("Invalid command! Please select a valid command.");
+                default -> logger.warn("Invalid command! Please select a valid command.");
             }
         }
     }
 
     public void showMainMenu() {
-        System.out.println("\nChoose a command:");
-        System.out.println("1. Fill with test data");
-        System.out.println("2. Display the entire list of families");
-        System.out.println("3. Display families bigger than a specified number");
-        System.out.println("4. Display families less than a specified number");
-        System.out.println("5. Count families with a specific number of members");
-        System.out.println("6. Create a new family");
-        System.out.println("7. Delete a family by index");
-        System.out.println("8. Edit a family by index");
-        System.out.println("9. Remove all children over the age of majority");
-        System.out.println("10. Exit");
+        logger.info("\nChoose a command:");
+        logger.info("1. Fill with test data");
+        logger.info("2. Display the entire list of families");
+        logger.info("3. Display families bigger than a specified number");
+        logger.info("4. Display families less than a specified number");
+        logger.info("5. Count families with a specific number of members");
+        logger.info("6. Create a new family");
+        logger.info("7. Delete a family by index");
+        logger.info("8. Edit a family by index");
+        logger.info("9. Remove all children over the age of majority");
+        logger.info("10. Exit");
     }
 
     private int getUserInput(String message) {
         while (true) {
-            System.out.print(message);
+            logger.info(message);
             try {
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a number.");
-                scanner.nextLine();
+                logger.warn("Invalid input! Please enter a number.");
+                scanner.nextLine(); // Clear the invalid input
             }
         }
     }
 
     private void fillWithTestData() {
         familyService.fillWithTestData();
-        System.out.println("Test data has been added.");
+        logger.info("Test data has been added.");
     }
 
     private void displayAllFamilies() {
         List<Family> families = familyService.getAllFamilies();
         if (families.isEmpty()) {
-            System.out.println("The family list is empty.");
+            logger.info("The family list is empty.");
         } else {
-            families.forEach(System.out::println);
+            families.forEach(family -> logger.info(family.toString()));
         }
     }
 
     private void displayFamiliesBiggerThan() {
-        int size = getUserInput("Enter the minimum family size: ");
-        List<Family> families = familyService.displayFamiliesBiggerThan(size);
+        int size = getUserInput("Enter the maximum family size: ");
+        List<Family> families = familyService.displayFamiliesLessThan(size);
+
         if (families.isEmpty()) {
-            System.out.println("No families found.");
+            logger.info("No families found for the maximum size: {}", size);
         } else {
-            families.forEach(System.out::println);
+            logger.info("Displaying families with less than {} members:", size);
+            families.forEach(family -> logger.info(family.toString()));
         }
     }
 
@@ -96,64 +101,63 @@ public class FamilyController {
         int size = getUserInput("Enter the maximum family size: ");
         List<Family> families = familyService.displayFamiliesLessThan(size);
         if (families.isEmpty()) {
-            System.out.println("No families found.");
+            logger.info("No families found.");
         } else {
-            families.forEach(System.out::println);
+            families.forEach(family -> logger.info(family.toString()));
         }
     }
 
     private void countFamiliesWithMembers() {
-        int familyIndex = getUserInput("Enter the family index: ");
+        int familyIndex = getUserInput(ENTER_FAMILY_INDEX_MESSAGE);
         familyService.getFamilyByIndex(familyIndex)
                 .ifPresentOrElse(
                         family -> {
                             int count = familyService.countFamilyMembers(family);
-                            System.out.println("Number of family members: " + count);
+                            logger.info("Number of family members: {}", count);
                         },
-                        () -> System.out.println("Invalid family index."));
+                        () -> logger.info("Invalid family index."));
     }
-
 
     private void createNewFamily() {
         Human mother = getHumanDetails("mother");
         Human father = getHumanDetails("father");
         familyService.createNewFamily(mother, father);
-        System.out.println("New family created.");
+        logger.info("New family created.");
     }
 
     private Human getHumanDetails(String role) {
-        System.out.println("Enter details for the " + role + ":");
-        System.out.print("Name: ");
-        scanner.nextLine();
+        logger.info("Enter details for the {}:", role);
+        logger.info("Name: ");
+        scanner.nextLine(); // Clear the buffer
         String name = scanner.nextLine();
-        System.out.print("Last Name: ");
+        logger.info("Last Name: ");
         String lastName = scanner.nextLine();
         long birthYear = getUserInput("Birth Year: ");
         return new Human(name, lastName, birthYear);
     }
 
     private void deleteFamilyByIndex() {
-        int index = getUserInput("Enter the family index: ") - 1;
+        int index = getUserInput(ENTER_FAMILY_INDEX_MESSAGE) - 1;
         familyService.deleteFamilyByIndex(index);
-        System.out.println("Family deleted if the index was valid.");
+        logger.info("Family deleted if the index was valid.");
     }
 
     private void editFamilyByIndex() {
-        int index = getUserInput("Enter the family index: ") - 1;
+        int index = getUserInput(ENTER_FAMILY_INDEX_MESSAGE) - 1;
         Family family = familyService.getFamilyByIndex(index).orElse(null);
         if (family == null) {
-            System.out.println("Family not found.");
+            logger.info("Family not found.");
             return;
         }
 
-        System.out.println("1. Give birth to a child");
-        System.out.println("2. Adopt a child");
+        logger.info("1. Give birth to a child");
+        logger.info("2. Adopt a child");
         int editChoice = getUserInput("Choose an option: ");
 
         switch (editChoice) {
             case 1 -> handleChildBirth(family);
             case 2 -> handleChildAdoption(family);
-            default -> System.out.println("Invalid choice.");
+            default -> logger.info("Invalid choice.");
         }
     }
 
@@ -161,31 +165,31 @@ public class FamilyController {
         if (family.countFamily() > 4) {
             throw new FamilyOverFlowException("Reached the maximum number of family members!");
         }
-        System.out.print("Son's name: ");
+        logger.info("Son's name: ");
         scanner.nextLine(); // Clear the buffer
         String maleName = scanner.nextLine();
-        System.out.print("Daughter's name: ");
+        logger.info("Daughter's name: ");
         String femaleName = scanner.nextLine();
         familyService.bornChild(family, maleName, femaleName);
-        System.out.println("Child born.");
+        logger.info("Child born.");
     }
 
     private void handleChildAdoption(Family family) {
         if (family.countFamily() > 4) {
             throw new FamilyOverFlowException("Reached the maximum number of family members!");
         }
-        System.out.print("Child's name: ");
+        logger.info("Child's name: ");
         scanner.nextLine();
         String childName = scanner.nextLine();
         long childBirthYear = getUserInput("Child's birth year: ");
         Human child = new Human(childName, "", childBirthYear);
         familyService.adoptChild(family, child);
-        System.out.println("Child adopted.");
+        logger.info("Child adopted.");
     }
 
     private void deleteAllChildrenOlderThan() {
         int age = getUserInput("Enter the age limit: ");
         familyService.deleteChildrenOlderThan(age);
-        System.out.println("All children older than the specified age have been removed.");
+        logger.info("All children older than the specified age have been removed.");
     }
 }

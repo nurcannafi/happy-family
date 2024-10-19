@@ -1,6 +1,7 @@
-package dao_layer.dao;
+package dao.impl;
 
-import happy_family.Family;
+import dao.FamilyDao;
+import entity.Family;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -72,4 +73,5 @@ public class CollectionFamilyDao implements FamilyDao {
             families = (List<Family>) ois.readObject();
         }
     }
+
 }

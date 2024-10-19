@@ -1,4 +1,4 @@
-package happy_family;
+package model;
 
 public enum DayOfWeek {
     MONDAY,

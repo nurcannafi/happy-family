@@ -1,4 +1,8 @@
-package happy_family;
+package entity;
+
+import model.Species;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -6,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public abstract class Pet implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(Pet.class);
 
     private String nickname;
     private Integer age;
@@ -30,9 +36,8 @@ public abstract class Pet implements Serializable {
     public abstract void respond();
 
     public void eat() {
-        System.out.println("I am eating");
+        logger.info("I am eating");
     }
-
 
     public String getNickname() {
         return nickname;
