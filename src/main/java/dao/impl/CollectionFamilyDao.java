@@ -2,7 +2,6 @@ package dao.impl;
 
 import dao.FamilyDao;
 import entity.Family;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
