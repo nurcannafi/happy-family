@@ -22,6 +22,7 @@ public class FamilyService {
     private static final String NAME_SMITH = "Smith";
     private static final String NAME_WILLIAMS = "Williams";
     private static final String NAME_JOHNSON = "Johnson";
+    private static final String INVALID_INDEX_WARNING = "Invalid index.";
 
     public FamilyService(CollectionFamilyDao familyDao) {
         this.familyDao = familyDao;
@@ -61,7 +62,7 @@ public class FamilyService {
         if (index >= 0 && index < families.size()) {
             familyDao.deleteFamily(index);
         } else {
-            logger.warn("Invalid index.");
+            logger.warn(INVALID_INDEX_WARNING);
         }
     }
 
@@ -93,7 +94,7 @@ public class FamilyService {
         if (index >= 0 && index < families.size()) {
             return Optional.of(families.get(index));
         } else {
-            logger.warn("Invalid index.");
+            logger.warn(INVALID_INDEX_WARNING);
             return Optional.empty();
         }
     }
