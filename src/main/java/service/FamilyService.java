@@ -1,9 +1,9 @@
 package service;
 
 import dao.impl.CollectionFamilyDao;
-import entity.Human;
-import entity.Pet;
-import entity.Family;
+import dao.entity.Human;
+import dao.entity.Pet;
+import dao.entity.Family;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

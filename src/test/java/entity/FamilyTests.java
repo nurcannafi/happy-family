@@ -1,5 +1,9 @@
 package entity;
 
+import dao.entity.Dog;
+import dao.entity.Family;
+import dao.entity.Human;
+import dao.entity.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -75,11 +75,11 @@ public class HappyFamilyApp {
         boolean running = true;
 
         while (running) {
-            logger.info("1. View all families");
-            logger.info("2. Save data to file");
-            logger.info("3. Load data from file");
-            logger.info("4. Exit");
-            logger.info("Enter your choice: ");
+            System.out.println("1. View all families");
+            System.out.println("2. Save data to file");
+            System.out.println("3. Load data from file");
+            System.out.println("4. Exit");
+            System.out.println("Enter your choice: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
