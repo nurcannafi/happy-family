@@ -1,4 +1,4 @@
-package entity;
+package dao.entity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package dao;
 
-import entity.Family;
+import dao.entity.Family;
 import java.io.IOException;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package entity;
+package dao.entity;
 
 import model.Species;
 import org.slf4j.Logger;

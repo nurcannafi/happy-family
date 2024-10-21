@@ -1,4 +1,4 @@
-package entity;
+package dao.entity;
 
 import model.DayOfWeek;
 import org.slf4j.Logger;

@@ -2,13 +2,13 @@ package service;
 
 import dao.impl.CollectionFamilyDao;
 
-import entity.DomesticCat;
-import entity.Dog;
-import entity.Family;
-import entity.Human;
-import entity.Man;
-import entity.Pet;
-import entity.Woman;
+import dao.entity.DomesticCat;
+import dao.entity.Dog;
+import dao.entity.Family;
+import dao.entity.Human;
+import dao.entity.Man;
+import dao.entity.Pet;
+import dao.entity.Woman;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

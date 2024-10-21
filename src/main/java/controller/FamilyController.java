@@ -4,8 +4,8 @@ import exception.FamilyOverFlowException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.FamilyService;
-import entity.Family;
-import entity.Human;
+import dao.entity.Family;
+import dao.entity.Human;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -46,17 +46,17 @@ public class FamilyController {
     }
 
     public void showMainMenu() {
-        logger.info("\nChoose a command:");
-        logger.info("1. Fill with test data");
-        logger.info("2. Display the entire list of families");
-        logger.info("3. Display families bigger than a specified number");
-        logger.info("4. Display families less than a specified number");
-        logger.info("5. Count families with a specific number of members");
-        logger.info("6. Create a new family");
-        logger.info("7. Delete a family by index");
-        logger.info("8. Edit a family by index");
-        logger.info("9. Remove all children over the age of majority");
-        logger.info("10. Exit");
+        System.out.println("\nChoose a command:");
+        System.out.println("1. Fill with test data");
+        System.out.println("2. Display the entire list of families");
+        System.out.println("3. Display families bigger than a specified number");
+        System.out.println("4. Display families less than a specified number");
+        System.out.println("5. Count families with a specific number of members");
+        System.out.println("6. Create a new family");
+        System.out.println("7. Delete a family by index");
+        System.out.println("8. Edit a family by index");
+        System.out.println("9. Remove all children over the age of majority");
+        System.out.println("10. Exit");
     }
 
     private int getUserInput(String message) {
@@ -166,7 +166,7 @@ public class FamilyController {
             throw new FamilyOverFlowException("Reached the maximum number of family members!");
         }
         logger.info("Son's name: ");
-        scanner.nextLine(); // Clear the buffer
+        scanner.nextLine();
         String maleName = scanner.nextLine();
         logger.info("Daughter's name: ");
         String femaleName = scanner.nextLine();
