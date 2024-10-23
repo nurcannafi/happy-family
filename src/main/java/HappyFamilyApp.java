@@ -69,7 +69,7 @@ public class HappyFamilyApp {
         FamilyController familyController = new FamilyController(familyService);
         familyController.start();
 
-        String filePath = args.length > 0 ? args[0] : "C:/data/families_data.txt";
+        String filePath = "C:/data/families_data.txt";
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
